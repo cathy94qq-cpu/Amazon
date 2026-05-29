@@ -1,0 +1,1143 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WinWise</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <div class="brand-row">
+          <button class="brand" type="button" id="openLogin" aria-label="打开登录">
+            <span>WinWise</span>
+          </button>
+        </div>
+
+        <button class="new-chat" type="button" id="newChat">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+          开启新对话
+        </button>
+
+        <div class="sidebar-tools" aria-label="快捷入口">
+          <button class="sidebar-tool" type="button" id="openSearch">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.3-4.3m2.3-5.2a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z" /></svg>
+            <span>Search</span>
+          </button>
+          <button class="sidebar-tool" type="button" id="openSkills">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 7.5 12 12l8-4.5L12 3Zm-8 9 8 4.5 8-4.5M4 16.5 12 21l8-4.5" /></svg>
+            <span>Skills</span>
+          </button>
+          <button class="sidebar-tool" type="button" id="openProjects">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h7l2 2h9v10H3z" /></svg>
+            <span>Projects</span>
+          </button>
+        </div>
+
+        <div class="sidebar-projects hidden" id="sidebarProjects">
+          <div class="sidebar-projects-head">
+            <span>项目</span>
+            <button type="button" id="sidebarNewProject">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+              新项目
+            </button>
+          </div>
+          <button class="sidebar-project-item" type="button" data-project-toggle="memo">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h7l2 2h9v10H3z" /></svg>
+            <span>Memo宣传</span>
+            <em>...</em>
+          </button>
+          <div class="project-chat-list" data-project-list="memo">
+            <button type="button">封面插图设计要求</button>
+            <button type="button">GEO 新手入门指南</button>
+            <button type="button">MemoLabs宣传内容策划</button>
+            <button type="button">短视频宣传策划</button>
+          </div>
+        </div>
+
+        <nav class="chat-history" aria-label="历史对话">
+          <section class="hidden">
+            <h2>置顶</h2>
+            <button class="history-item" type="button" data-chat="weekly">
+              <span>产品运营一周计划整理</span>
+              <span class="item-menu" data-menu="weekly" aria-label="更多">...</span>
+            </button>
+          </section>
+          <section>
+            <h2>最近</h2>
+            <button class="history-item active" type="button" data-chat="ads">
+              <span>亚马逊广告投放诊断</span>
+              <span class="item-menu" data-menu="ads" aria-label="更多">...</span>
+            </button>
+            <button class="history-item" type="button" data-chat="inventory">
+              <span>FBA库存周转优化建议</span>
+              <span class="item-menu" data-menu="inventory" aria-label="更多">...</span>
+            </button>
+            <button class="history-item" type="button" data-chat="listing">
+              <span>Listing标题关键词重构</span>
+              <span class="item-menu" data-menu="listing" aria-label="更多">...</span>
+            </button>
+            <button class="history-item" type="button" data-chat="reviews">
+              <span>竞品评论痛点整理</span>
+              <span class="item-menu" data-menu="reviews" aria-label="更多">...</span>
+            </button>
+            <button class="history-item" type="button" data-chat="tax">
+              <span>欧洲站税务提醒</span>
+              <span class="item-menu" data-menu="tax" aria-label="更多">...</span>
+            </button>
+            <button class="history-item" type="button" data-chat="launch">
+              <span>新品首月推广节奏</span>
+              <span class="item-menu" data-menu="launch" aria-label="更多">...</span>
+            </button>
+            <button class="history-item" type="button" data-chat="return">
+              <span>美国站退货率分析</span>
+              <span class="item-menu" data-menu="return" aria-label="更多">...</span>
+            </button>
+            <button class="history-item" type="button" data-chat="budget">
+              <span>广告预算复盘</span>
+              <span class="item-menu" data-menu="budget" aria-label="更多">...</span>
+            </button>
+          </section>
+          <section>
+            <h2>2026-04</h2>
+            <button class="history-item" type="button" data-chat="strategy">
+              <span>测试应用登录策略建议</span>
+              <span class="item-menu" data-menu="strategy" aria-label="更多">...</span>
+            </button>
+            <button class="history-item" type="button" data-chat="bundle">
+              <span>路牌褐色小点解析</span>
+              <span class="item-menu" data-menu="bundle" aria-label="更多">...</span>
+            </button>
+            <button class="history-item" type="button" data-chat="captcha">
+              <span>人机验证体验优化</span>
+              <span class="item-menu" data-menu="captcha" aria-label="更多">...</span>
+            </button>
+            <button class="history-item" type="button" data-chat="pricing">
+              <span>创意到上线开发部署教程</span>
+              <span class="item-menu" data-menu="pricing" aria-label="更多">...</span>
+            </button>
+            <button class="history-item" type="button" data-chat="rebate">
+              <span>推文评论奖励弹窗文案</span>
+              <span class="item-menu" data-menu="rebate" aria-label="更多">...</span>
+            </button>
+          </section>
+          <section>
+            <h2>2026-03</h2>
+            <button class="history-item" type="button" data-chat="metamask">
+              <span>MetaMask支持NFT交易</span>
+              <span class="item-menu" data-menu="metamask" aria-label="更多">...</span>
+            </button>
+            <button class="history-item" type="button" data-chat="email163">
+              <span>163邮箱注册方法</span>
+              <span class="item-menu" data-menu="email163" aria-label="更多">...</span>
+            </button>
+          </section>
+        </nav>
+
+        <div class="profile-row">
+          <button class="avatar logged-out" type="button" id="profileLogin">ww</button>
+          <button class="profile-name" type="button" id="profileName">
+            <strong>登录 WinWise</strong>
+            <span>Free plan</span>
+          </button>
+          <button class="icon-btn small" type="button" aria-label="账号菜单">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 10 4-4 4 4M16 14l-4 4-4-4" /></svg>
+          </button>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <div class="chat-stage has-messages" id="chatStage">
+          <header class="conversation-header" id="conversationHeader">
+            <div>
+              <h1 id="conversationTitle">亚马逊广告投放诊断</h1>
+              <p id="conversationMode">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m13 2-8 12h6l-1 8 9-13h-6l0-7Z" /></svg>
+                快速模式
+              </p>
+            </div>
+            <button class="icon-btn" type="button" id="headerShare" aria-label="分享对话" title="分享">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a3 3 0 1 0-2.8-4M6 14a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm12-2a3 3 0 1 0 0 6 3 3 0 0 0 0-6ZM8.6 15.4l6.8-4.8M8.7 18.5l6.6 2.9" /></svg>
+            </button>
+          </header>
+
+          <div class="welcome" id="welcomePanel">
+            <div class="welcome-title">
+              <span class="welcome-badge" aria-hidden="true">W</span>
+              <h1 id="welcomeTitle">WinWise 让运营更简单</h1>
+            </div>
+            <p class="welcome-subtitle">懂你的亚马逊运营助手，帮你搞定广告、选品与增长</p>
+            <div class="prompt-tags" aria-label="能力标签">
+              <button class="prompt-tag active" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m13 2-8 12h6l-1 8 9-13h-6l0-7Z" /></svg>
+                快速模式
+              </button>
+              <button class="prompt-tag" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v12H4zM8 21h8M12 17v4" /></svg>
+                广告诊断
+              </button>
+              <button class="prompt-tag" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13a8 8 0 0 0 14 5M20 11A8 8 0 0 0 6 6l-2 2M4 4v4h4" /></svg>
+                Listing 优化
+              </button>
+              <button class="prompt-tag" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4zM8 8h8M8 12h5M8 16h7" /></svg>
+                运营计划
+              </button>
+              <button class="prompt-tag" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.4 6 .9-4.3 4.2 1 6-5.4-2.8-5.4 2.8 1-6-4.3-4.2 6-.9L12 3Z" /></svg>
+                品牌增长
+              </button>
+              <button class="prompt-tag" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4zM8 10h8M8 14h5" /></svg>
+                E-Commerce
+              </button>
+            </div>
+            <section class="featured-prompts" aria-label="精选示例">
+              <div class="featured-head">
+                <h2>精选示例</h2>
+                <button type="button" id="exploreMoreExamples">探索更多</button>
+              </div>
+              <div class="featured-grid">
+                <button type="button" data-featured-example="acos">
+                  <strong>亚马逊广告 ACOS 异常升高怎么办？</strong>
+                  <small>运营分析 · 3001</small>
+                </button>
+                <button type="button" data-featured-example="listing">
+                  <strong>如何重构标题与五点描述提升转化？</strong>
+                  <small>生成方案 · 2686</small>
+                </button>
+                <button type="button" data-featured-example="inventory">
+                  <strong>FBA 库存积压如何制定清仓节奏？</strong>
+                  <small>生成报告 · 2557</small>
+                </button>
+                <button type="button" data-featured-example="reviews">
+                  <strong>如何从竞品差评中提炼产品卖点？</strong>
+                  <small>生成策略 · 6482</small>
+                </button>
+              </div>
+            </section>
+          </div>
+
+          <section class="messages" id="messages" aria-live="polite"></section>
+
+          <section class="examples-view hidden" id="examplesView" aria-label="精选示例">
+            <header class="examples-header">
+              <div>
+                <h2>精选示例</h2>
+                <p>平台用户使用频率较高的问题与解答</p>
+              </div>
+              <button type="button" id="backToNewChat">返回新对话</button>
+            </header>
+            <div class="examples-grid">
+              <button type="button" data-featured-example="acos"><strong>亚马逊广告 ACOS 异常升高怎么办？</strong><small>运营分析 · 3001</small></button>
+              <button type="button" data-featured-example="listing"><strong>如何重构标题与五点描述提升转化？</strong><small>生成方案 · 2686</small></button>
+              <button type="button" data-featured-example="inventory"><strong>FBA 库存积压如何制定清仓节奏？</strong><small>生成报告 · 2557</small></button>
+              <button type="button" data-featured-example="reviews"><strong>如何从竞品差评中提炼产品卖点？</strong><small>生成策略 · 6482</small></button>
+              <button type="button" data-featured-example="acos"><strong>广告预算应该如何分配到精准词和拓词广告？</strong><small>运营分析 · 2214</small></button>
+              <button type="button" data-featured-example="listing"><strong>新品首月如何安排 Listing 和广告节奏？</strong><small>增长策略 · 1987</small></button>
+              <button type="button" data-featured-example="inventory"><strong>如何判断 SKU 是否应该补货或清仓？</strong><small>库存策略 · 1765</small></button>
+              <button type="button" data-featured-example="reviews"><strong>差评率上升时如何快速定位产品问题？</strong><small>评论洞察 · 1648</small></button>
+            </div>
+          </section>
+
+          <section class="skills-view hidden" id="skillsView" aria-label="Skills">
+            <header class="skills-header">
+              <div>
+                <h2>技能</h2>
+                <p>赋予 WinWise 更强大的能力</p>
+              </div>
+              <div class="skills-actions">
+                <label class="skills-search">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.3-4.3m2.3-5.2a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z" /></svg>
+                  <input type="text" placeholder="搜索技能" />
+                </label>
+              </div>
+            </header>
+
+            <section class="installed-skills">
+              <div class="skills-section-title">
+                <span>已安装</span>
+                <b>1</b>
+                <button type="button" aria-label="更多">...</button>
+              </div>
+              <article class="installed-card">
+                <span class="skill-logo blue">W</span>
+                <div>
+                  <h3>WinWise 文档</h3>
+                  <p>WinWise 在线文档平台，创建、编辑、管理多种类型文档</p>
+                </div>
+              </article>
+            </section>
+
+            <section class="recommended-skills">
+              <h2>推荐</h2>
+              <div class="skills-grid">
+                <article class="skill-card">
+                  <span class="skill-logo rose">S</span>
+                  <div>
+                    <h3>Self-Improving Agent</h3>
+                    <p>捕获经验教训、错误和纠正，以实现持续改进。适用于运营复盘与流程优化。</p>
+                    <small>675k · 3.9k</small>
+                  </div>
+                </article>
+                <article class="skill-card">
+                  <span class="skill-logo cyan">S</span>
+                  <div>
+                    <h3>Summarize</h3>
+                    <p>总结 URL 或文件，支持网页、PDF、图片、音频与运营资料。</p>
+                    <small>491k · 906</small>
+                  </div>
+                </article>
+                <article class="skill-card">
+                  <span class="skill-logo violet">F</span>
+                  <div>
+                    <h3>Find Skills</h3>
+                    <p>当用户询问如何做某事时，帮助发现并安装智能体技能。</p>
+                    <small>458k · 1.3k</small>
+                  </div>
+                </article>
+                <article class="skill-card">
+                  <span class="skill-logo orange">G</span>
+                  <div>
+                    <h3>Github</h3>
+                    <p>使用 gh CLI 与 GitHub 交互，管理 issue、PR、CI 运行及代码协作。</p>
+                    <small>307k · 624</small>
+                  </div>
+                </article>
+                <article class="skill-card">
+                  <span class="skill-logo purple">S</span>
+                  <div>
+                    <h3>Self-Improving + Proactive Agent</h3>
+                    <p>自我反思、自我批评、自我学习与自组织记忆，提升长期任务表现。</p>
+                    <small>294k · 1.2k</small>
+                  </div>
+                </article>
+                <article class="skill-card">
+                  <span class="skill-logo indigo">A</span>
+                  <div>
+                    <h3>Agent Browser</h3>
+                    <p>快速无头浏览器自动化，支持页面导航、点击和信息提取。</p>
+                    <small>275k · 793</small>
+                  </div>
+                </article>
+              </div>
+            </section>
+          </section>
+
+          <section class="projects-view hidden" id="projectsView" aria-label="Projects">
+            <header class="projects-header">
+              <h2>项目</h2>
+              <div>
+                <label class="project-search">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.3-4.3m2.3-5.2a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z" /></svg>
+                  <input type="text" placeholder="搜索项目" />
+                </label>
+                <button class="new-project-button" type="button" id="newProjectButton">新建</button>
+              </div>
+            </header>
+            <div class="project-tabs">
+              <button class="active" type="button" data-project-tab="all">全部</button>
+              <button type="button" data-project-tab="owned">由你创建</button>
+              <button type="button" data-project-tab="shared">与你共享</button>
+            </div>
+            <div class="project-table">
+              <div class="project-table-head">
+                <span>名称</span>
+                <span>修改时间</span>
+              </div>
+              <article class="project-row pinned" data-project="olivia">
+                <button class="project-name" type="button">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h7l2 2h9v10H3z" /></svg>
+                  olivia
+                </button>
+                <span>今天</span>
+                <button class="project-more" type="button" aria-label="更多项目操作">...</button>
+              </article>
+              <article class="project-row" data-project="cathy">
+                <button class="project-name" type="button">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h7l2 2h9v10H3z" /></svg>
+                  cathy
+                </button>
+                <span>今天</span>
+                <button class="project-more" type="button" aria-label="更多项目操作">...</button>
+              </article>
+            </div>
+            <div class="project-empty hidden" id="projectSharedEmpty">
+              <span>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h7l2 2h9v10H3z" /></svg>
+              </span>
+              <h3>没有匹配的项目</h3>
+              <p>试试其他搜索词或标签页。</p>
+            </div>
+          </section>
+
+          <form class="composer" id="composer">
+            <label class="sr-only" for="promptInput">给 WinWise 发送消息</label>
+            <textarea id="promptInput" rows="1" placeholder="让 WinWise 分析一次亚马逊运营方案"></textarea>
+            <div class="composer-footer">
+              <div class="composer-left-icons">
+                <button class="plain-tool" type="button" id="addToolButton" aria-label="添加">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+                </button>
+                <button class="plain-tool" type="button" id="skillsToolButton" aria-label="Skills">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5c2.8 0 5 .5 8 2v10c-3-1.5-5.2-2-8-2v-10Z" /><path d="M20 6.5c-2.8 0-5 .5-8 2v10c3-1.5 5.2-2 8-2v-10Z" /></svg>
+                </button>
+              </div>
+              <div class="tool-pills">
+                <button class="pill" type="button" data-tool="thinking">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 22h4M8.2 14.7A6 6 0 1 1 15.8 14c-.8.7-1.3 1.5-1.5 2.5H9.8c-.2-.7-.7-1.3-1.6-1.8Z" /></svg>
+                  深度思考
+                </button>
+                <button class="pill active" type="button" data-tool="search">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM3.6 9h16.8M3.6 15h16.8M12 3c2.2 2.4 3.3 5.4 3.3 9S14.2 18.6 12 21c-2.2-2.4-3.3-5.4-3.3-9S9.8 5.4 12 3Z" /></svg>
+                  智能搜索
+                </button>
+              </div>
+              <div class="composer-right-icons">
+                <button class="plain-tool cube" type="button" id="modelToolButton" aria-label="模型">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z" /><path d="M12 12 4 7.5M12 12l8-4.5M12 12v9" /></svg>
+                </button>
+              </div>
+              <button class="send-btn" type="submit" aria-label="发送">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" /></svg>
+              </button>
+            </div>
+          </form>
+          <div class="composer-popover add-popover hidden" id="addPopover" aria-hidden="true">
+            <button type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.4 11.6 12 21a6 6 0 0 1-8.5-8.5l9.7-9.7a4 4 0 0 1 5.7 5.7l-9.8 9.8a2 2 0 0 1-2.8-2.8l8.6-8.6" /></svg>
+              Upload File
+            </button>
+            <button type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM3.6 9h16.8M3.6 15h16.8M12 3c2.2 2.4 3.3 5.4 3.3 9S14.2 18.6 12 21c-2.2-2.4-3.3-5.4-3.3-9S9.8 5.4 12 3Z" /></svg>
+              Web Search
+              <span class="mini-toggle" aria-hidden="true"></span>
+            </button>
+          </div>
+          <div class="composer-popover skills-popover hidden" id="skillsPopover" aria-hidden="true">
+            <h2>Skills</h2>
+            <div class="skill-tabs">
+              <button class="active" type="button" data-skill-filter="agent">Agent</button>
+              <button type="button" data-skill-filter="productivity">Productivity</button>
+              <button type="button" data-skill-filter="developer">Developer</button>
+              <button type="button" data-skill-filter="browser">Browser</button>
+            </div>
+            <div class="skill-popover-list">
+              <button type="button" data-skill-category="agent">
+                <span class="skill-mini-icon">S</span>
+                <span><strong>Self-Improving Agent</strong><small>捕获经验教训、错误和纠正，以实现持续改进。</small></span>
+              </button>
+              <button type="button" data-skill-category="productivity">
+                <span class="skill-mini-icon">S</span>
+                <span><strong>Summarize</strong><small>总结 URL 或文件，支持网页、PDF、图片与运营资料。</small></span>
+              </button>
+              <button type="button" data-skill-category="agent">
+                <span class="skill-mini-icon">F</span>
+                <span><strong>Find Skills</strong><small>帮助发现并安装智能体技能。</small></span>
+              </button>
+              <button type="button" data-skill-category="developer">
+                <span class="skill-mini-icon">G</span>
+                <span><strong>Github</strong><small>使用 gh CLI 与 GitHub 交互，管理 issue、PR 和 CI。</small></span>
+              </button>
+              <button type="button" data-skill-category="agent">
+                <span class="skill-mini-icon">S</span>
+                <span><strong>Self-Improving + Proactive Agent</strong><small>自我反思、自我批评、自我学习与自组织记忆。</small></span>
+              </button>
+              <button type="button" data-skill-category="browser">
+                <span class="skill-mini-icon">A</span>
+                <span><strong>Agent Browser</strong><small>快速无头浏览器自动化，支持页面导航和信息提取。</small></span>
+              </button>
+            </div>
+          </div>
+          <div class="composer-popover model-popover hidden" id="modelPopover" aria-hidden="true">
+            <button class="model-option" type="button">
+              <span><strong>Opus 4.7</strong><small>Most capable for ambitious tasks</small></span>
+              <em>Upgrade</em>
+            </button>
+            <button class="model-option selected" type="button">
+              <span><strong>Sonnet 4.6</strong><small>Most efficient for everyday tasks</small></span>
+              <b>✓</b>
+            </button>
+            <button class="model-option" type="button">
+              <span><strong>Haiku 4.5</strong><small>Fastest for quick answers</small></span>
+            </button>
+            <div class="model-divider"></div>
+            <button class="model-row" type="button">
+              <span><strong>Adaptive thinking</strong><small>Thinks for more complex tasks</small></span>
+              <span class="mini-toggle" aria-hidden="true"></span>
+            </button>
+            <div class="model-divider"></div>
+            <button class="model-row" type="button">
+              <span><strong>More models</strong></span>
+              <b>›</b>
+            </button>
+          </div>
+          <p class="ai-note">内容由 AI 生成，请仔细甄别</p>
+        </div>
+      </main>
+    </div>
+
+    <div class="context-menu" id="contextMenu" role="menu" aria-hidden="true">
+      <button type="button" role="menuitem" data-action="rename">
+        <svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5Z" /></svg>
+        重命名
+      </button>
+      <button type="button" role="menuitem" data-action="pin">
+        <svg viewBox="0 0 24 24"><path d="M12 17V3M7 8l5-5 5 5M5 21h14" /></svg>
+        <span id="pinActionText">置顶</span>
+      </button>
+      <button type="button" role="menuitem" data-action="share">
+        <svg viewBox="0 0 24 24"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M16 6l-4-4-4 4M12 2v13" /></svg>
+        分享
+      </button>
+      <button class="danger" type="button" role="menuitem" data-action="delete">
+        <svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M6 6l1 15h10l1-15" /></svg>
+        删除
+      </button>
+    </div>
+
+    <div class="project-menu hidden" id="projectMenu" role="menu" aria-hidden="true">
+      <button type="button" data-project-action="pin">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 4 6 6-4 1-5 5-1 4-6-6 4-1 5-5 1-4Z" /></svg>
+        <span id="projectPinText">置顶项目</span>
+      </button>
+      <button type="button" data-project-action="share">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12v7h16v-7M16 6l-4-4-4 4M12 2v13" /></svg>
+        分享
+      </button>
+      <button type="button" data-project-action="settings">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.5A3.5 3.5 0 1 0 12 8a3.5 3.5 0 0 0 0 7.5Z" /><path d="M19 12h2M3 12h2M12 3v2M12 19v2" /></svg>
+        项目设置
+      </button>
+      <button class="danger" type="button" data-project-action="delete">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 15h10l1-15" /></svg>
+        删除项目
+      </button>
+    </div>
+
+    <div class="dialog-backdrop hidden" id="createProjectDialog" aria-hidden="true">
+      <section class="project-dialog create-project" role="dialog" aria-modal="true" aria-labelledby="createProjectTitle">
+        <button class="dialog-close" type="button" data-project-dialog-close aria-label="关闭">
+          <svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12" /></svg>
+        </button>
+        <h2 id="createProjectTitle">创建项目</h2>
+        <label>项目名称</label>
+        <input id="newProjectName" type="text" placeholder="哥本哈根之旅" />
+        <p class="project-tip">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 22h4M8.2 14.7A6 6 0 1 1 15.8 14c-.8.7-1.3 1.5-1.5 2.5H9.8c-.2-.7-.7-1.3-1.6-1.8Z" /></svg>
+          项目功能可将聊天、文件和自定义指令集中保存，以便用于持续进行的工作。
+        </p>
+        <button class="create-project-submit" type="button" id="confirmCreateProject">创建项目</button>
+      </section>
+    </div>
+
+    <div class="dialog-backdrop hidden" id="projectSettingsDialog" aria-hidden="true">
+      <section class="project-dialog project-settings" role="dialog" aria-modal="true" aria-labelledby="projectSettingsTitle">
+        <button class="dialog-close" type="button" data-project-dialog-close aria-label="关闭">
+          <svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12" /></svg>
+        </button>
+        <h2 id="projectSettingsTitle">项目设置</h2>
+        <label>项目名称</label>
+        <input id="projectSettingsName" type="text" value="olivia" />
+        <label>记忆</label>
+        <input type="text" value="默认" disabled />
+        <small>该项目可以访问外部聊天的记忆，反之亦然。此设置无法更改。</small>
+        <button class="delete-project-outline" type="button" id="settingsDeleteProject">删除项目</button>
+      </section>
+    </div>
+
+    <div class="dialog-backdrop hidden" id="projectDeleteDialog" aria-hidden="true">
+      <section class="action-dialog compact" role="dialog" aria-modal="true">
+        <h2>删除项目？</h2>
+        <p><strong>这将永久删除所有项目文件和聊天。</strong> 要保存聊天，请在删除前将其移至聊天列表或其他项目中。</p>
+        <div class="dialog-actions">
+          <button class="ghost-action" type="button" data-project-dialog-close>取消</button>
+          <button class="danger-action" type="button" id="confirmProjectDelete">删除</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="dialog-backdrop hidden" id="projectShareDialog" aria-hidden="true">
+      <section class="project-dialog share-project" role="dialog" aria-modal="true">
+        <button class="dialog-close" type="button" data-project-dialog-close aria-label="关闭">
+          <svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12" /></svg>
+        </button>
+        <h2>分享 <span id="shareProjectName">olivia</span></h2>
+        <div class="invite-entry" id="inviteEntry">
+          <input id="inviteEmailInput" type="email" placeholder="电子邮件，以逗号分隔" />
+          <span class="invite-chip hidden" id="inviteChip">cathy@gmail.com <button type="button" id="clearInvite">×</button></span>
+          <button class="permission-select hidden" type="button" id="permissionSelect">可以编辑⌄</button>
+          <div class="permission-menu hidden" id="permissionMenu">
+            <button type="button">
+              <span>○</span>
+              <strong>可以聊天</strong>
+              <small>聊天和查看项目内容</small>
+            </button>
+            <button class="selected" type="button">
+              <span>✎</span>
+              <strong>可以编辑</strong>
+              <small>聊天和编辑项目内容</small>
+              <em>✓</em>
+            </button>
+          </div>
+        </div>
+        <label>访问权限适用对象</label>
+        <div class="share-permission">
+          <span class="share-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 10V8a6 6 0 0 1 12 0v2M5 10h14v11H5z" /></svg>
+          </span>
+          <strong>仅限受邀用户</strong>
+        </div>
+        <div class="share-owner">
+          <span class="avatar mini">C</span>
+          <strong>cathy</strong>
+          <em>所有者</em>
+        </div>
+        <p class="project-tip share-warning">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8h.01M12 12v5M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z" /></svg>
+          <span>此项目可能包含个人信息<br />所有项目内容均对协作者可见。共享项目已禁用个人记忆。</span>
+        </p>
+        <div class="share-project-actions">
+          <button class="cancel-invite hidden" type="button" id="cancelInvite">取消</button>
+          <button class="invite-button hidden" type="button" id="inviteButton">邀请</button>
+          <button class="copy-project-link" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.1.1l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1M14 11a5 5 0 0 0-7.1-.1l-2 2A5 5 0 0 0 12 20l1.1-1.1" /></svg>
+            复制链接
+          </button>
+        </div>
+      </section>
+    </div>
+
+    <div class="search-backdrop hidden" id="searchDialog" aria-hidden="true">
+      <section class="search-panel" role="dialog" aria-modal="true" aria-label="搜索会话">
+        <div class="search-input-row">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.3-4.3m2.3-5.2a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z" /></svg>
+          <input type="text" placeholder="Search chats and projects" />
+          <button type="button" id="closeSearch" aria-label="关闭搜索">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" /></svg>
+          </button>
+        </div>
+        <div class="search-results">
+          <button type="button"><span>产品运营一周计划整理</span><em>置顶</em></button>
+          <button type="button"><span>亚马逊广告投放诊断</span><em>最近</em></button>
+          <button type="button"><span>FBA库存周转优化建议</span><em>最近</em></button>
+          <button type="button"><span>测试应用登录策略建议</span><em>2026-04</em></button>
+          <button type="button"><span>路牌褐色小点解析</span><em>2026-04</em></button>
+          <button type="button"><span>MetaMask支持NFT交易</span><em>2026-03</em></button>
+          <button type="button"><span>163邮箱注册方法</span><em>2026-03</em></button>
+        </div>
+      </section>
+    </div>
+
+    <div class="account-menu hidden" id="accountMenu" aria-hidden="true">
+      <div class="account-head">
+        <strong>cathy94q@gmail.com</strong>
+        <span>免费计划</span>
+      </div>
+      <button type="button" id="upgradePlanButton">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m13 2-8 12h6l-1 8 9-13h-6l0-7Z" /></svg>
+        升级订阅
+      </button>
+      <button type="button" id="accountManageButton">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.5A3.5 3.5 0 1 0 12 8a3.5 3.5 0 0 0 0 7.5Z" /><path d="M19.4 15a1.8 1.8 0 0 0 .4 2l.1.1-2 3.4-.2-.1a1.8 1.8 0 0 0-2.1.3l-.4.2-.7 2h-4l-.7-2-.4-.2a1.8 1.8 0 0 0-2.1-.3l-.2.1-2-3.4.1-.1a1.8 1.8 0 0 0 .4-2l-.1-.5-1.6-1.4 2-3.4 1.9.4.4-.3a1.8 1.8 0 0 0 1-1.7V8l.7-2h4l.7 2v.2a1.8 1.8 0 0 0 1 1.7l.4.3 1.9-.4 2 3.4-1.6 1.4-.1.4Z" /></svg>
+        账户管理
+      </button>
+      <button type="button" id="billingButton">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4zM4 9h16M8 14h4" /></svg>
+        账单
+      </button>
+      <button class="logout" type="button" id="logoutButton">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3M21 3v18h-7" /></svg>
+        退出登录
+      </button>
+    </div>
+
+    <div class="account-backdrop hidden" id="accountDialog" aria-hidden="true">
+      <section class="account-panel" role="dialog" aria-modal="true" aria-labelledby="accountTitle">
+        <button class="account-close" type="button" id="closeAccountDialog" aria-label="关闭">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" /></svg>
+        </button>
+        <h2 id="accountTitle">账户管理</h2>
+        <div class="account-layout">
+          <nav class="account-tabs" aria-label="账户设置">
+            <button class="active" type="button" data-account-tab="profile">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21a8 8 0 0 0-16 0M12 13a5 5 0 1 0 0-10 5 5 0 0 0 0 10Z" /></svg>
+              个人主页
+              <span>›</span>
+            </button>
+            <button type="button" data-account-tab="subscription">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16v10H4zM8 11h8" /></svg>
+              订阅
+            </button>
+            <button type="button" data-account-tab="billing">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h10v18l-2-1-2 1-2-1-2 1-2-1V3Z" /><path d="M10 8h4M10 12h4" /></svg>
+              账单
+            </button>
+          </nav>
+          <div class="account-content">
+            <section class="account-tab-panel" data-panel="profile">
+              <h3>个人信息</h3>
+              <label>头像</label>
+              <div class="avatar-editor">
+                <span id="settingsAvatar">M</span>
+                <button type="button">更换头像</button>
+              </div>
+              <label>用户名</label>
+              <input id="settingsName" type="text" value="memolabsio" />
+              <label>邮箱</label>
+              <input id="settingsEmail" type="email" value="memolabsio@gmail.com" />
+              <label>语言偏好</label>
+              <button class="language-select" type="button">简体中文 <span>⌄</span></button>
+              <button class="save-account" type="button">保存更改</button>
+            </section>
+            <section class="account-tab-panel hidden" data-panel="subscription">
+              <h3>我的订阅</h3>
+              <p class="account-note">当前持有 2 个有效订阅</p>
+              <div class="subscription-stack">
+                <article class="subscription-card personal-subscription">
+                  <div class="subscription-head">
+                    <span class="subscription-badge">个人版</span>
+                    <strong>¥106</strong>
+                  </div>
+                  <h4>专业版</h4>
+                  <p>进阶级效率专家</p>
+                  <span class="subscription-status">生效中</span>
+                  <div class="subscription-features">
+                    <span>品牌记忆库</span>
+                    <span>深度评论拆解</span>
+                    <span>精准申诉顾问</span>
+                    <span>高频使用权限</span>
+                  </div>
+                  <div class="subscription-actions">
+                    <button type="button" id="openUpgradeFromAccount">更改套餐</button>
+                    <button class="outline-danger" type="button">取消订阅</button>
+                  </div>
+                </article>
+
+                <article class="subscription-card business-subscription">
+                  <div class="subscription-head">
+                    <span class="subscription-badge business">Business</span>
+                    <strong>$20</strong>
+                  </div>
+                  <h4>Business</h4>
+                  <p>适用于 2 个或更多席位，按年计费</p>
+                  <span class="subscription-status">生效中</span>
+                  <div class="seat-cards">
+                    <div><span>已购席位</span><strong>5</strong><small>$20 /席</small></div>
+                    <div><span>已分配</span><strong>3</strong><small>含 1 待接受</small></div>
+                    <div><span>剩余席位</span><strong>2</strong><small>可立即邀请</small></div>
+                  </div>
+                  <div class="seat-usage">
+                    <span>席位占用</span><strong>3 / 5</strong>
+                    <i></i>
+                  </div>
+                  <div class="subscription-features">
+                    <span>聊天和文件上传不限量</span>
+                    <span>Codex 编码代理</span>
+                    <span>SSO / MFA 高级安全</span>
+                    <span>数据不用 于训练模型</span>
+                  </div>
+                  <div class="subscription-actions">
+                    <button type="button" id="manageSeatsButton">管理席位</button>
+                    <button type="button">更改套餐</button>
+                    <button class="outline-danger" type="button">取消订阅</button>
+                  </div>
+                  <div class="subscription-notice">你的个人专业版与 Business 空间相互独立。在 Business 标签页下操作时，个人聊天完整保留在「Personal」标签页，不受影响。</div>
+                </article>
+              </div>
+            </section>
+            <section class="account-tab-panel hidden" data-panel="seats">
+              <div class="seats-title-row">
+                <button type="button" id="backToSubscription" aria-label="返回我的订阅">
+                  <svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6" /></svg>
+                </button>
+                <div>
+                  <h3>成员与席位</h3>
+                  <p class="account-note">Business · 剩余 2 个席位</p>
+                </div>
+              </div>
+              <div class="seat-management">
+                <h4>邀请新成员</h4>
+                <div class="invite-member-row">
+                  <input type="email" aria-label="成员邮箱" />
+                  <select aria-label="成员角色">
+                    <option>成员</option>
+                    <option>管理员</option>
+                  </select>
+                  <button type="button">发送邀请</button>
+                </div>
+                <h4>团队成员 <span>3 人</span></h4>
+                <div class="member-list">
+                  <div class="member-row">
+                    <span class="member-avatar">WL</span>
+                    <div><strong>王磊</strong><small>wanglei@memo-labs.com</small></div>
+                    <em>管理员</em>
+                    <i class="active"></i>
+                    <span>已激活</span>
+                    <button type="button" disabled>操作</button>
+                  </div>
+                  <div class="member-row">
+                    <span class="member-avatar green">ZY</span>
+                    <div><strong>张雨</strong><small>zhangyu@memo-labs.com</small></div>
+                    <em>成员</em>
+                    <i class="active"></i>
+                    <span>已激活</span>
+                    <button type="button">移除</button>
+                  </div>
+                  <div class="member-row">
+                    <span class="member-avatar amber">LX</span>
+                    <div><strong>李昕</strong><small>lixin@memo-labs.com</small></div>
+                    <em>成员</em>
+                    <i class="pending"></i>
+                    <span>待接受</span>
+                    <button type="button">重发邀请</button>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section class="account-tab-panel hidden" data-panel="billing">
+              <h3>账单</h3>
+              <div class="billing-table-card">
+                <div class="billing-table-head">
+                  <span>日期</span>
+                  <span>类别</span>
+                  <span>金额</span>
+                  <span>状态</span>
+                  <span>发票</span>
+                </div>
+                <div class="billing-table-row">
+                  <span>2026-06-28 09:30:00</span>
+                  <span>订阅版</span>
+                  <span>¥106</span>
+                  <span><em>Paid</em></span>
+                  <button type="button">下载</button>
+                </div>
+                <div class="billing-table-row">
+                  <span>2027-05-28 10:00:00</span>
+                  <span>Business版</span>
+                  <span>1,200 USD</span>
+                  <span><em>Paid</em></span>
+                  <button type="button">下载</button>
+                </div>
+                <p>暂无更多数据</p>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="upgrade-backdrop hidden" id="upgradeDialog" aria-hidden="true">
+      <section class="upgrade-panel" role="dialog" aria-modal="true" aria-labelledby="upgradeTitle">
+        <button class="upgrade-close" type="button" id="closeUpgrade" aria-label="关闭">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" /></svg>
+        </button>
+        <h2 id="upgradeTitle">与您共同成长的计划</h2>
+        <div class="billing-tabs" role="tablist" aria-label="套餐类型">
+          <button class="active" type="button" data-plan-tab="personal">个人版</button>
+          <button type="button" data-plan-tab="business">Business</button>
+        </div>
+        <div class="plans-grid personal-plans" data-plan-panel="personal">
+          <article class="plan-card">
+            <div class="plan-head">
+              <span class="plan-icon sprout">⌁</span>
+              <div>
+                <h3>免费版</h3>
+                <p>入门级运营助手</p>
+              </div>
+            </div>
+            <div class="price">¥0</div>
+            <button class="outline-plan" type="button" data-plan-action="free">免费使用</button>
+            <ul>
+              <li>实时百科问答</li>
+              <li>基础文案润色</li>
+              <li>行业动态资讯</li>
+              <li>通用运营模板</li>
+            </ul>
+          </article>
+          <article class="plan-card featured">
+            <span class="popular-badge">最受欢迎</span>
+            <div class="plan-head">
+              <span class="plan-icon bolt">⚡</span>
+              <div>
+                <h3>专业版</h3>
+                <p>进阶级效率专家</p>
+              </div>
+            </div>
+            <div class="price">¥106 <span>/ 月，按月计费</span></div>
+            <button class="solid-plan" type="button" data-plan-action="pro">获取专业版</button>
+            <ul>
+              <li>免费版的全部功能，以及：</li>
+              <li>品牌记忆库</li>
+              <li>深度评论拆解</li>
+              <li>精准申诉顾问</li>
+              <li>地道客服话术</li>
+              <li>高频使用权限</li>
+            </ul>
+          </article>
+          <article class="plan-card">
+            <div class="plan-head">
+              <span class="plan-icon rocket">🚀</span>
+              <div>
+                <h3>Max版</h3>
+                <p>战略级决策顾问</p>
+              </div>
+            </div>
+            <div class="price">¥625起<span>/ 月，按月计费</span></div>
+            <button class="solid-plan" type="button" data-plan-action="max">获取Max版</button>
+            <p class="plan-note">无需承诺 · 随时取消</p>
+            <ul>
+              <li>专业版的全部功能，以及：</li>
+              <li>全量使用额度</li>
+              <li>抢先体验高阶模型</li>
+              <li>长文输出能力</li>
+              <li>跨平台知识图谱</li>
+              <li>专属运营大脑</li>
+            </ul>
+          </article>
+        </div>
+        <div class="business-plans hidden" data-plan-panel="business">
+          <article class="business-card">
+            <h3>免费版</h3>
+            <div class="business-price"><span>$</span>0 <small>USD /月</small></div>
+            <p>了解 AI 的功能</p>
+            <button class="current-plan" type="button" disabled>你当前的套餐</button>
+            <ul>
+              <li>核心模型</li>
+              <li>有限额度的消息发送和文件上传</li>
+              <li>有限的图片创建功能</li>
+              <li>有限的记忆</li>
+            </ul>
+            <footer>已有套餐？ <button type="button">查看账单帮助</button></footer>
+          </article>
+          <article class="business-card highlighted">
+            <h3>Business</h3>
+            <div class="business-price"><span>$</span>20 <small>USD /月</small></div>
+            <p>借助适用于团队的 AI 完成更多工作</p>
+            <button class="business-upgrade" type="button" id="openBusinessCheckout">升级</button>
+            <ul>
+              <li>用于工作的高级模型</li>
+              <li>标准聊天和文件上传不限量</li>
+              <li>更多图像、视频生成和数据分析</li>
+              <li>集成与公司内部知识</li>
+              <li>Codex 编码代理</li>
+              <li>适用于团队的工具，如项目功能和自定义 GPT</li>
+              <li>支持 SSO、MFA 等功能的高级安全功能</li>
+              <li>内置隐私保护；数据绝不会用于训练我们的 AI 模型</li>
+            </ul>
+            <footer>适用于 2 个或更多席位，按月计费<br />无限制使用需遵守防滥用规范。<button type="button">了解更多</button></footer>
+          </article>
+        </div>
+      </section>
+    </div>
+
+    <div class="dialog-backdrop hidden" id="planCheckoutDialog" aria-hidden="true">
+      <section class="checkout-dialog personal-plan-page personal-subscribe-page" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
+        <button class="dialog-close" type="button" id="closeCheckout" aria-label="关闭">
+          <svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6" /></svg>
+        </button>
+        <h2 id="checkoutTitle">配置套餐</h2>
+        <p class="visually-hidden" id="checkoutSubtitle">你即将切换套餐</p>
+        <span class="visually-hidden" id="checkoutIcon">⚡</span>
+        <small class="visually-hidden" id="checkoutPlanDesc">Monthly</small>
+        <span class="visually-hidden" id="checkoutBilling">按月计费</span>
+        <button class="checkout-secondary visually-hidden" type="button" id="backToPlans">返回套餐选择</button>
+        <div class="personal-subscribe-content">
+          <section class="personal-order">
+            <h3 id="checkoutPlanName">Pro 套餐</h3>
+            <div class="personal-order-lines">
+              <div><span>按月订阅订阅</span><strong id="checkoutPrice">US$20.00</strong></div>
+              <div><span>预估税费</span><strong id="checkoutSubtotal">US$0.00</strong></div>
+              <div class="due"><span>今日应付金额</span><strong id="checkoutDue">US$20.00</strong></div>
+            </div>
+          </section>
+
+          <section class="personal-payment">
+            <h3>付款方式</h3>
+            <div class="payment-method-grid">
+              <button class="payment-method active" type="button">
+                <svg viewBox="0 0 24 24"><path d="M4 7h16v10H4zM4 10h16M8 15h2" /></svg>
+                <span>银行卡</span>
+              </button>
+              <button class="payment-method paypal" type="button">
+                <strong>P</strong>
+                <span>PayPal</span>
+              </button>
+            </div>
+            <label class="personal-card-field">
+              <span>卡号</span>
+              <input type="text" />
+              <em>VISA</em><em>MC</em><em>AMEX</em><em>DISCOVER</em>
+            </label>
+            <div class="personal-card-row">
+              <label>
+                <span>有效期</span>
+                <input type="text" />
+              </label>
+              <label>
+                <span>安全码</span>
+                <input type="text" />
+              </label>
+            </div>
+            <button class="personal-subscribe-button" type="button">订阅</button>
+            <p id="checkoutRenewal" class="personal-subscribe-note">
+              将按每月自动续订，直至取消。将收取 US$20.00/月。可在设置中随时取消。订阅即表示你同意我们的使用条款和服务积分条款，已阅读隐私政策，并授权 WinWise 保存你的付款方式并进行扣费。
+            </p>
+          </section>
+        </div>
+      </section>
+    </div>
+
+    <div class="dialog-backdrop hidden" id="businessCheckoutDialog" aria-hidden="true">
+      <section class="business-checkout" role="dialog" aria-modal="true" aria-labelledby="businessCheckoutTitle">
+        <button class="business-back" type="button" id="closeBusinessCheckout" aria-label="返回">
+          <svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6" /></svg>
+        </button>
+        <h2 id="businessCheckoutTitle">配置套餐</h2>
+        <div class="business-checkout-grid">
+          <div class="business-config">
+            <section>
+              <h3>套餐详细信息</h3>
+              <div class="billing-choice-grid">
+                <button class="billing-choice active" type="button" data-business-billing="monthly">
+                  <span>按月结算</span>
+                  <strong>USD $25 席位/月</strong>
+                </button>
+                <button class="billing-choice" type="button" data-business-billing="yearly">
+                  <span>按年结算</span>
+                  <strong>USD $20 席位/月</strong>
+                  <em>节省 20%</em>
+                </button>
+              </div>
+              <div class="seat-stepper">
+                <span>席位</span>
+                <strong id="businessSeatCount">5</strong>
+                <button type="button" aria-label="减少席位">−</button>
+                <button type="button" aria-label="增加席位">＋</button>
+              </div>
+            </section>
+            <section>
+              <h3>联系信息</h3>
+              <label class="business-field">
+                <span>电子邮件</span>
+                <input type="email" value="cathy94q@gmail.com" />
+              </label>
+            </section>
+            <section>
+              <h3>付款方式</h3>
+              <label class="business-field card-field">
+                <span>卡号</span>
+                <input type="text" />
+                <em>VISA</em><em>MC</em><em>AMEX</em><em>DISCOVER</em>
+              </label>
+              <div class="business-field-row">
+                <label class="business-field">
+                  <span>有效期</span>
+                  <input type="text" />
+                </label>
+                <label class="business-field">
+                  <span>安全码</span>
+                  <input type="text" />
+                </label>
+              </div>
+            </section>
+          </div>
+          <aside class="business-summary-card">
+            <h3>Business 套餐</h3>
+            <p>热门功能</p>
+            <ul>
+              <li>最佳工作模型的高级使用权限</li>
+              <li>高级安全功能，支持 SSO、MFA 等</li>
+              <li>团队工具，如项目及自定义 GPT</li>
+              <li>与 SharePoint 和其他工具集成</li>
+            </ul>
+            <div class="business-total">
+              <div><span id="businessPlanLine">5 x 按月订阅订阅</span><strong id="businessPlanAmount">US$125.00</strong></div>
+              <div><span>预估税费</span><strong>US$0.00</strong></div>
+              <div class="due"><span>今日应付金额</span><strong id="businessDueAmount">US$125.00</strong></div>
+            </div>
+            <button type="button">订阅</button>
+          </aside>
+        </div>
+        <p class="business-checkout-note" id="businessCheckoutNote">
+          按每月续订，直至取消。我们将按照活跃席位数收取 US$125.00。你可前往设置部分随时取消。订阅即表示，你同意 Business 条款，同时授权我们保存你的付款方式并向其收费。
+        </p>
+      </section>
+    </div>
+
+    <div class="dialog-backdrop hidden" id="deleteDialog" aria-hidden="true">
+      <section class="action-dialog compact" role="dialog" aria-modal="true" aria-labelledby="deleteTitle">
+        <h2 id="deleteTitle">删除后，该对话将不可恢复</h2>
+        <p>由该对话生成的分享链接也将失效</p>
+        <div class="dialog-actions">
+          <button class="ghost-action" type="button" data-dialog-close>取消</button>
+          <button class="danger-action" type="button" id="confirmDelete">删除该对话</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="dialog-backdrop hidden" id="shareDialog" aria-hidden="true">
+      <section class="action-dialog share" role="dialog" aria-modal="true" aria-labelledby="shareTitle">
+        <button class="dialog-close" type="button" data-dialog-close aria-label="关闭">
+          <svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12" /></svg>
+        </button>
+        <h2 id="shareTitle">创建分享链接</h2>
+        <p>任何获得链接的人都可以查看你分享的对话，请检查是否包含敏感或隐私内容。你可以随时在系统设置 - 数据管理中管理被分享的链接。</p>
+        <button class="primary-action" type="button" id="createShare">创建并复制</button>
+        <div class="share-result hidden" id="shareResult">
+          <span id="shareUrl">https://winwise.local/share/ads</span>
+          <button type="button" id="copyShare">已复制</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="dialog-backdrop hidden" id="renameDialog" aria-hidden="true">
+      <section class="action-dialog rename" role="dialog" aria-modal="true" aria-labelledby="renameTitle">
+        <button class="dialog-close" type="button" data-dialog-close aria-label="关闭">
+          <svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12" /></svg>
+        </button>
+        <h2 id="renameTitle">重命名对话</h2>
+        <input id="renameInput" type="text" maxlength="32" />
+        <div class="dialog-actions">
+          <button class="ghost-action" type="button" data-dialog-close>取消</button>
+          <button class="primary-small" type="button" id="confirmRename">保存</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="modal-backdrop hidden" id="loginModal" aria-hidden="true">
+      <section class="login-card" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+        <button class="close-btn" type="button" id="closeLogin" aria-label="关闭登录">
+          <svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12" /></svg>
+        </button>
+        <div class="login-brand">
+          <span class="login-logo">W</span>
+          <strong>WinWise</strong>
+        </div>
+        <h2 id="loginTitle">欢迎来到 WinWise</h2>
+        <p>登录或注册以继续</p>
+        <button class="oauth-btn" type="button" id="googleLogin">
+          <span class="google-dot">G</span>
+          使用 Google
+        </button>
+        <div class="login-divider"></div>
+        <form class="login-form" id="loginForm">
+          <label class="sr-only" for="emailInput">电子邮箱</label>
+          <input id="emailInput" type="email" placeholder="电子邮箱" autocomplete="email" required />
+          <div class="verify-box">
+            <span class="spinner" aria-hidden="true"></span>
+            <span>正在验证...</span>
+            <strong>CLOUDFLARE</strong>
+          </div>
+          <button class="email-submit" type="submit">使用邮箱继续</button>
+        </form>
+        <small>继续即表示您同意 使用条款 和 隐私政策</small>
+      </section>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
+
