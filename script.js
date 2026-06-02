@@ -72,6 +72,34 @@ const conversations = {
       </ul>
     `,
   },
+  cathyProjectCount: {
+    title: "Cathy项目聊天数量",
+    mode: "快速模式",
+    question: "cathy 项目下的聊天有几条？请帮我快速整理项目内聊天记录。",
+    answer: `
+      <p>cathy 项目当前展示了 <strong>2 条聊天记录</strong>，分别是项目聊天数量统计和 ima Copilot Skill 介绍。</p>
+      <h2>聊天记录概览</h2>
+      <ul>
+        <li><strong>Cathy项目聊天数量：</strong>用于查看项目内聊天数量、最近更新时间和项目沟通概况。</li>
+        <li><strong>ima Copilot Skill 介绍：</strong>用于沉淀 Skill 能力说明、适用场景和后续接入建议。</li>
+      </ul>
+      <p>建议后续把 Cathy 项目中的运营讨论、Skill 使用说明和复盘内容按主题归档，方便团队快速检索。</p>
+    `,
+  },
+  imaSkillIntro: {
+    title: "ima Copilot Skill 介绍",
+    mode: "专家模式",
+    question: "请介绍 ima Copilot Skill 的能力、适用场景以及接入建议。",
+    answer: `
+      <p>ima Copilot Skill 可以作为项目内的知识和任务助手，帮助团队把常用流程、分析模板和项目经验沉淀成可复用能力。</p>
+      <h2>适用场景</h2>
+      <ul>
+        <li>整理项目资料、会议纪要和运营复盘。</li>
+        <li>快速生成标准化的分析框架与执行清单。</li>
+        <li>辅助团队成员查找项目背景、历史结论和下一步动作。</li>
+      </ul>
+    `,
+  },
 };
 
 const featuredExamples = {
@@ -205,10 +233,34 @@ const todaySection = document.querySelector(".chat-history section:nth-child(2)"
 const openSearch = document.querySelector("#openSearch");
 const openSkills = document.querySelector("#openSkills");
 const openProjects = document.querySelector("#openProjects");
+const openLibraryCreate = document.querySelector("#openLibraryCreate");
+const uploadSkillButton = document.querySelector("#uploadSkillButton");
+const uploadSkillDialog = document.querySelector("#uploadSkillDialog");
+const closeUploadSkill = document.querySelector("#closeUploadSkill");
+const createLibraryDialog = document.querySelector("#createLibraryDialog");
+const closeLibraryCreate = document.querySelector("#closeLibraryCreate");
+const cancelLibraryCreate = document.querySelector("#cancelLibraryCreate");
+const confirmCreateLibrary = document.querySelector("#confirmCreateLibrary");
+const newLibraryName = document.querySelector("#newLibraryName");
+const newLibraryDescription = document.querySelector("#newLibraryDescription");
 const searchDialog = document.querySelector("#searchDialog");
 const closeSearch = document.querySelector("#closeSearch");
 const skillsView = document.querySelector("#skillsView");
+const libraryView = document.querySelector("#libraryView");
+const libraryHeader = document.querySelector("#libraryHeader");
+const libraryListView = document.querySelector("#libraryListView");
+const libraryDetailView = document.querySelector("#libraryDetailView");
+const libraryDetailTitle = document.querySelector("#libraryDetailTitle");
+const libraryDetailDescription = document.querySelector("#libraryDetailDescription");
+const backToLibraryList = document.querySelector("#backToLibraryList");
 const projectsView = document.querySelector("#projectsView");
+const projectDetailView = document.querySelector("#projectDetailView");
+const projectDetailTitle = document.querySelector("#projectDetailTitle");
+const projectPromptInput = document.querySelector("#projectPromptInput");
+const projectChatRecords = document.querySelector("#projectChatRecords");
+const projectChatEmpty = document.querySelector("#projectChatEmpty");
+const projectEmptyName = document.querySelector("#projectEmptyName");
+const newLibraryButton = document.querySelector("#newLibraryButton");
 const accountMenu = document.querySelector("#accountMenu");
 const logoutButton = document.querySelector("#logoutButton");
 const upgradePlanButton = document.querySelector("#upgradePlanButton");
@@ -245,11 +297,15 @@ const checkoutRenewal = document.querySelector("#checkoutRenewal");
 const addToolButton = document.querySelector("#addToolButton");
 const skillsToolButton = document.querySelector("#skillsToolButton");
 const modelToolButton = document.querySelector("#modelToolButton");
+const projectAddToolButton = document.querySelector("#projectAddToolButton");
+const projectSkillsToolButton = document.querySelector("#projectSkillsToolButton");
+const projectModelToolButton = document.querySelector("#projectModelToolButton");
 const addPopover = document.querySelector("#addPopover");
 const skillsPopover = document.querySelector("#skillsPopover");
 const modelPopover = document.querySelector("#modelPopover");
 const projectMenu = document.querySelector("#projectMenu");
 const projectPinText = document.querySelector("#projectPinText");
+const libraryFileMenu = document.querySelector("#libraryFileMenu");
 const createProjectDialog = document.querySelector("#createProjectDialog");
 const projectSettingsDialog = document.querySelector("#projectSettingsDialog");
 const projectDeleteDialog = document.querySelector("#projectDeleteDialog");
@@ -272,6 +328,7 @@ const cancelInvite = document.querySelector("#cancelInvite");
 const inviteButton = document.querySelector("#inviteButton");
 
 let activeProjectRow = null;
+let activeLibraryFileRow = null;
 
 let activeMenuButton = null;
 let selectedChatId = "ads";
@@ -331,7 +388,9 @@ function positionComposerPopover(button, popover) {
 
   left = Math.max(viewportPadding, Math.min(left, window.innerWidth - width - viewportPadding));
   const isNewChat = !chatStage.classList.contains("has-messages");
+  const isProjectComposer = Boolean(button.closest(".project-chat-composer"));
   const top = isNewChat
+    || isProjectComposer
     ? Math.min(window.innerHeight - height - viewportPadding, rect.bottom + 10)
     : Math.max(viewportPadding, rect.top - height - 10);
   popover.style.left = `${left}px`;
@@ -389,6 +448,13 @@ function closeProjectMenu() {
   projectMenu.setAttribute("aria-hidden", "true");
 }
 
+function closeLibraryFileMenu() {
+  document.querySelectorAll(".library-row.menu-open").forEach((row) => row.classList.remove("menu-open"));
+  libraryFileMenu.classList.add("hidden");
+  libraryFileMenu.setAttribute("aria-hidden", "true");
+  activeLibraryFileRow = null;
+}
+
 function getMenuButton() {
   return activeMenuButton ? activeMenuButton.closest(".history-item") : null;
 }
@@ -416,9 +482,12 @@ function openDialog(dialog) {
 
 function showChatSurface() {
   openSkills.classList.remove("active");
+  openLibraryCreate.classList.remove("active");
   openProjects.classList.remove("active");
   skillsView.classList.add("hidden");
+  libraryView.classList.add("hidden");
   projectsView.classList.add("hidden");
+  projectDetailView.classList.add("hidden");
   examplesView.classList.add("hidden");
   composer.classList.remove("hidden");
   messages.classList.remove("hidden");
@@ -429,14 +498,39 @@ function showSkillsSurface() {
   document.querySelectorAll(".history-item").forEach((item) => item.classList.remove("active"));
   chatStage.classList.add("has-messages");
   openSkills.classList.add("active");
+  openLibraryCreate.classList.remove("active");
   openProjects.classList.remove("active");
   messages.classList.add("hidden");
   composer.classList.add("hidden");
   skillsView.classList.remove("hidden");
+  libraryView.classList.add("hidden");
   projectsView.classList.add("hidden");
+  projectDetailView.classList.add("hidden");
   examplesView.classList.add("hidden");
   conversationTitle.textContent = "Skills";
   conversationMode.lastChild.textContent = " 应用能力";
+}
+
+function showLibrarySurface() {
+  closeContextMenu();
+  closeProjectMenu();
+  document.querySelectorAll(".history-item").forEach((item) => item.classList.remove("active"));
+  chatStage.classList.add("has-messages");
+  openLibraryCreate.classList.add("active");
+  openSkills.classList.remove("active");
+  openProjects.classList.remove("active");
+  messages.classList.add("hidden");
+  composer.classList.add("hidden");
+  skillsView.classList.add("hidden");
+  libraryView.classList.remove("hidden");
+  projectsView.classList.add("hidden");
+  projectDetailView.classList.add("hidden");
+  examplesView.classList.add("hidden");
+  conversationTitle.textContent = "Library";
+  conversationMode.lastChild.textContent = " 知识库";
+  libraryHeader.classList.remove("hidden");
+  libraryListView.classList.remove("hidden");
+  libraryDetailView.classList.add("hidden");
 }
 
 function showProjectsSurface() {
@@ -446,21 +540,53 @@ function showProjectsSurface() {
   chatStage.classList.add("has-messages");
   openProjects.classList.add("active");
   openSkills.classList.remove("active");
+  openLibraryCreate.classList.remove("active");
   messages.classList.add("hidden");
   composer.classList.add("hidden");
   skillsView.classList.add("hidden");
+  libraryView.classList.add("hidden");
   projectsView.classList.remove("hidden");
+  projectDetailView.classList.add("hidden");
   examplesView.classList.add("hidden");
+}
+
+function showProjectDetailSurface(projectName) {
+  const normalizedName = projectName.trim();
+  closeContextMenu();
+  closeProjectMenu();
+  document.querySelectorAll(".history-item").forEach((item) => item.classList.remove("active"));
+  chatStage.classList.add("has-messages");
+  openProjects.classList.add("active");
+  openSkills.classList.remove("active");
+  openLibraryCreate.classList.remove("active");
+  messages.classList.add("hidden");
+  composer.classList.add("hidden");
+  skillsView.classList.add("hidden");
+  libraryView.classList.add("hidden");
+  projectsView.classList.add("hidden");
+  projectDetailView.classList.remove("hidden");
+  examplesView.classList.add("hidden");
+  projectDetailTitle.textContent = normalizedName;
+  projectPromptInput.placeholder = `${normalizedName}中的新聊天`;
+  projectEmptyName.textContent = normalizedName;
+  const hasChats = normalizedName.toLowerCase() === "cathy";
+  projectChatRecords.classList.toggle("hidden", !hasChats);
+  projectChatEmpty.classList.toggle("hidden", hasChats);
+  conversationTitle.textContent = normalizedName;
+  conversationMode.lastChild.textContent = " 项目";
 }
 
 function showExamplesSurface() {
   chatStage.classList.add("has-messages");
   openSkills.classList.remove("active");
+  openLibraryCreate.classList.remove("active");
   openProjects.classList.remove("active");
   messages.classList.add("hidden");
   composer.classList.add("hidden");
   skillsView.classList.add("hidden");
+  libraryView.classList.add("hidden");
   projectsView.classList.add("hidden");
+  projectDetailView.classList.add("hidden");
   examplesView.classList.remove("hidden");
 }
 
@@ -664,6 +790,131 @@ searchDialog.addEventListener("click", (event) => {
 
 openSkills.addEventListener("click", showSkillsSurface);
 openProjects.addEventListener("click", showProjectsSurface);
+openLibraryCreate.addEventListener("click", showLibrarySurface);
+
+function openUploadSkillDialog() {
+  uploadSkillDialog.classList.remove("hidden");
+  uploadSkillDialog.setAttribute("aria-hidden", "false");
+}
+
+function closeUploadSkillDialog() {
+  uploadSkillDialog.classList.add("hidden");
+  uploadSkillDialog.setAttribute("aria-hidden", "true");
+}
+
+uploadSkillButton.addEventListener("click", openUploadSkillDialog);
+closeUploadSkill.addEventListener("click", closeUploadSkillDialog);
+uploadSkillDialog.addEventListener("click", (event) => {
+  if (event.target === uploadSkillDialog) closeUploadSkillDialog();
+});
+
+function openLibraryDialog() {
+  createLibraryDialog.classList.remove("hidden");
+  createLibraryDialog.setAttribute("aria-hidden", "false");
+  newLibraryName.value = "";
+  newLibraryDescription.value = "";
+  setTimeout(() => newLibraryName.focus(), 20);
+}
+
+function closeLibraryDialog() {
+  createLibraryDialog.classList.add("hidden");
+  createLibraryDialog.setAttribute("aria-hidden", "true");
+}
+
+newLibraryButton.addEventListener("click", openLibraryDialog);
+closeLibraryCreate.addEventListener("click", closeLibraryDialog);
+cancelLibraryCreate.addEventListener("click", closeLibraryDialog);
+createLibraryDialog.addEventListener("click", (event) => {
+  if (event.target === createLibraryDialog) closeLibraryDialog();
+});
+
+confirmCreateLibrary.addEventListener("click", () => {
+  const libraryName = newLibraryName.value.trim() || "未命名知识库";
+  const libraryDescription = newLibraryDescription.value.trim() || "暂无知识库描述";
+  const row = document.createElement("article");
+  const nameButton = document.createElement("button");
+  const createdTime = document.createElement("time");
+  row.className = "library-summary-row";
+  row.dataset.libraryName = libraryName;
+  row.dataset.libraryDescription = libraryDescription;
+  nameButton.type = "button";
+  nameButton.textContent = libraryName;
+  createdTime.textContent = "今天";
+  row.append(nameButton, createdTime);
+  document.querySelector(".library-summary-table").appendChild(row);
+  bindLibrarySummaryRow(row);
+  closeLibraryDialog();
+});
+
+document.querySelectorAll("[data-library-tab]").forEach((button) => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll("[data-library-tab]").forEach((tab) => tab.classList.toggle("active", tab === button));
+    const tabType = button.dataset.libraryTab;
+    document.querySelectorAll("[data-library-kind]").forEach((row) => {
+      row.classList.toggle("hidden", tabType !== "all" && row.dataset.libraryKind !== tabType);
+    });
+  });
+});
+
+function openLibraryDetail(row) {
+  const button = row.querySelector("button");
+  libraryDetailTitle.textContent = row.dataset.libraryName || button.textContent.trim();
+  libraryDetailDescription.textContent = row.dataset.libraryDescription || "暂无知识库描述";
+  libraryHeader.classList.add("hidden");
+  libraryListView.classList.add("hidden");
+  libraryDetailView.classList.remove("hidden");
+  document.querySelectorAll("[data-library-tab]").forEach((tab) => tab.classList.toggle("active", tab.dataset.libraryTab === "all"));
+  document.querySelectorAll("[data-library-kind]").forEach((item) => item.classList.remove("hidden"));
+}
+
+function bindLibrarySummaryRow(row) {
+  row.querySelector("button").addEventListener("click", () => openLibraryDetail(row));
+}
+
+document.querySelectorAll(".library-summary-row").forEach(bindLibrarySummaryRow);
+
+backToLibraryList.addEventListener("click", () => {
+  libraryDetailView.classList.add("hidden");
+  libraryHeader.classList.remove("hidden");
+  libraryListView.classList.remove("hidden");
+});
+
+document.querySelector(".library-table").addEventListener("click", (event) => {
+  const moreButton = event.target.closest(".library-file-more");
+  if (!moreButton) return;
+  event.stopPropagation();
+  closeLibraryFileMenu();
+  activeLibraryFileRow = moreButton.closest(".library-row");
+  activeLibraryFileRow.classList.add("menu-open");
+  const rect = moreButton.getBoundingClientRect();
+  libraryFileMenu.style.left = `${rect.right - 150}px`;
+  libraryFileMenu.style.top = `${rect.bottom + 6}px`;
+  libraryFileMenu.classList.remove("hidden");
+  libraryFileMenu.setAttribute("aria-hidden", "false");
+});
+
+libraryFileMenu.addEventListener("click", (event) => {
+  event.stopPropagation();
+  const actionButton = event.target.closest("[data-library-file-action]");
+  if (!actionButton || !activeLibraryFileRow) return;
+  const action = actionButton.dataset.libraryFileAction;
+  const fileName = activeLibraryFileRow.querySelector("span")?.textContent.trim() || "WinWise 文件";
+
+  if (action === "download") {
+    const blob = new Blob([`${fileName}\nWinWise 文件下载示例。`], { type: "text/plain;charset=utf-8" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `${fileName}.txt`;
+    link.click();
+    URL.revokeObjectURL(link.href);
+  }
+
+  if (action === "delete") {
+    activeLibraryFileRow.remove();
+  }
+
+  closeLibraryFileMenu();
+});
 
 document.querySelectorAll("[data-project-tab]").forEach((button) => {
   button.addEventListener("click", () => {
@@ -688,6 +939,13 @@ document.querySelector("[data-project-toggle='memo']").addEventListener("click",
 });
 
 document.querySelector(".project-table").addEventListener("click", (event) => {
+  const projectNameButton = event.target.closest(".project-name");
+  if (projectNameButton) {
+    const row = projectNameButton.closest(".project-row");
+    showProjectDetailSurface(row.dataset.project || projectNameButton.textContent.trim());
+    return;
+  }
+
   const button = event.target.closest(".project-more");
   if (!button) return;
   event.stopPropagation();
@@ -701,6 +959,13 @@ document.querySelector(".project-table").addEventListener("click", (event) => {
   projectMenu.style.top = `${rect.bottom + 6}px`;
   projectMenu.classList.remove("hidden");
   projectMenu.setAttribute("aria-hidden", "false");
+});
+
+document.querySelectorAll("[data-project-chat]").forEach((button) => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".history-item").forEach((item) => item.classList.remove("active"));
+    renderConversation(button.dataset.projectChat);
+  });
 });
 
 projectMenu.addEventListener("click", (event) => {
@@ -795,6 +1060,7 @@ document.querySelectorAll(".history-item").forEach((button) => {
 document.querySelectorAll(".item-menu").forEach(bindMenuTrigger);
 document.addEventListener("click", closeContextMenu);
 document.addEventListener("click", closeProjectMenu);
+document.addEventListener("click", closeLibraryFileMenu);
 document.addEventListener("click", closeAccountMenu);
 document.addEventListener("click", closeComposerPopovers);
 
@@ -828,6 +1094,9 @@ document.querySelectorAll(".pill").forEach((button) => {
   [addToolButton, addPopover],
   [skillsToolButton, skillsPopover],
   [modelToolButton, modelPopover],
+  [projectAddToolButton, addPopover],
+  [projectSkillsToolButton, skillsPopover],
+  [projectModelToolButton, modelPopover],
 ].forEach(([button, popover]) => {
   button.addEventListener("click", (event) => {
     event.stopPropagation();
@@ -919,7 +1188,7 @@ function openUpgradePlansPage() {
 upgradePlanButton.addEventListener("click", openUpgradePlansPage);
 
 accountManageButton.addEventListener("click", () => openAccountDialog("profile"));
-billingButton.addEventListener("click", () => openAccountDialog("billing"));
+billingButton?.addEventListener("click", () => openAccountDialog("billing"));
 openUpgradeFromAccount.addEventListener("click", () => {
   closeAccountPanel();
   upgradePlanButton.click();
@@ -1172,6 +1441,9 @@ document.addEventListener("keydown", (event) => {
     closeBusinessCheckoutDialog();
     closeComposerPopovers();
     closeProjectMenu();
+    closeLibraryFileMenu();
+    closeUploadSkillDialog();
+    closeLibraryDialog();
     permissionMenu.classList.add("hidden");
     [createProjectDialog, projectSettingsDialog, projectDeleteDialog, projectShareDialog].forEach((dialog) => dialog.classList.add("hidden"));
     closeContextMenu();

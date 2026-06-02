@@ -29,6 +29,10 @@
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 7.5 12 12l8-4.5L12 3Zm-8 9 8 4.5 8-4.5M4 16.5 12 21l8-4.5" /></svg>
             <span>Skills</span>
           </button>
+          <button class="sidebar-tool" type="button" id="openLibraryCreate">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h12l2 2v14H5zM9 4v5h8" /></svg>
+            <span>Library</span>
+          </button>
           <button class="sidebar-tool" type="button" id="openProjects">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h7l2 2h9v10H3z" /></svg>
             <span>Projects</span>
@@ -253,6 +257,7 @@
                   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.3-4.3m2.3-5.2a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z" /></svg>
                   <input type="text" placeholder="搜索技能" />
                 </label>
+                <button class="new-project-button" type="button" id="uploadSkillButton">上传技能</button>
               </div>
             </header>
 
@@ -260,7 +265,6 @@
               <div class="skills-section-title">
                 <span>已安装</span>
                 <b>1</b>
-                <button type="button" aria-label="更多">...</button>
               </div>
               <article class="installed-card">
                 <span class="skill-logo blue">W</span>
@@ -326,6 +330,101 @@
             </section>
           </section>
 
+          <section class="library-view hidden" id="libraryView" aria-label="Library">
+            <header class="library-header" id="libraryHeader">
+              <h2>知识库</h2>
+              <div>
+                <label class="project-search">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.3-4.3m2.3-5.2a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z" /></svg>
+                  <input type="text" placeholder="搜索知识库" />
+                </label>
+                <button class="new-project-button library-new-button" type="button" id="newLibraryButton">
+                  新建
+                </button>
+              </div>
+            </header>
+            <div class="library-list-view" id="libraryListView">
+              <div class="library-table library-summary-table">
+                <div class="library-table-head library-summary-head">
+                  <span>名称</span>
+                  <span>创建时间</span>
+                </div>
+                <article class="library-summary-row" data-library-name="DataDID" data-library-description="DataDID 运营资料、活动文档与站点内容沉淀">
+                  <button type="button">DataDID</button>
+                  <time>今天</time>
+                </article>
+                <article class="library-summary-row" data-library-name="MemolabsNotebook" data-library-description="团队知识笔记、项目复盘与素材归档">
+                  <button type="button">MemolabsNotebook</button>
+                  <time>5月29日</time>
+                </article>
+              </div>
+            </div>
+            <div class="library-detail-view hidden" id="libraryDetailView">
+              <header class="library-detail-header">
+                <button class="library-back" type="button" id="backToLibraryList" aria-label="返回知识库列表">
+                  <span id="libraryDetailTitle">DataDID</span>
+                </button>
+                <div>
+                  <label class="project-search">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.3-4.3m2.3-5.2a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z" /></svg>
+                    <input type="text" placeholder="搜索文件" />
+                  </label>
+                  <button class="new-project-button" type="button">上传文档</button>
+                </div>
+              </header>
+              <p class="library-detail-description" id="libraryDetailDescription">DataDID 运营资料、活动文档与站点内容沉淀</p>
+              <div class="library-tabs">
+                <button class="active" type="button" data-library-tab="all">全部</button>
+                <button type="button" data-library-tab="image">图片</button>
+                <button type="button" data-library-tab="file">文件</button>
+              </div>
+              <div class="library-table">
+              <div class="library-table-head">
+                <span>名称</span>
+                <span>已修改 ↓</span>
+                <span>大小</span>
+                <span></span>
+              </div>
+              <article class="library-row" data-library-kind="file">
+                <span><i class="file-icon doc">W</i>DataDID网站首页内容.doc</span>
+                <time>今天</time>
+                <em>31.5 KB</em>
+                <button class="library-file-more" type="button" aria-label="更多文件操作">...</button>
+              </article>
+              <article class="library-row" data-library-kind="image">
+                <span><i class="file-icon image"></i>微信截图_20260529103618.png</span>
+                <time>5月29日</time>
+                <em>107 KB</em>
+                <button class="library-file-more" type="button" aria-label="更多文件操作">...</button>
+              </article>
+              <article class="library-row" data-library-kind="file">
+                <span><i class="file-icon text"></i>cathy.md</span>
+                <time>5月28日</time>
+                <em>1 B</em>
+                <button class="library-file-more" type="button" aria-label="更多文件操作">...</button>
+              </article>
+              <article class="library-row" data-library-kind="file">
+                <span><i class="file-icon doc">W</i>PS小技巧.doc</span>
+                <time>5月28日</time>
+                <em>36.5 KB</em>
+                <button class="library-file-more" type="button" aria-label="更多文件操作">...</button>
+              </article>
+              <article class="library-row" data-library-kind="file">
+                <span><i class="file-icon csv">CSV</i>🔥_DataDID_Blind_Box_Carnival_A_... Participants.csv</span>
+                <time>5月28日</time>
+                <em>221 B</em>
+                <button class="library-file-more" type="button" aria-label="更多文件操作">...</button>
+              </article>
+              <article class="library-row" data-library-kind="file">
+                <span><i class="file-icon text"></i>datadid.md</span>
+                <time>5月28日</time>
+                <em>1 B</em>
+                <button class="library-file-more" type="button" aria-label="更多文件操作">...</button>
+              </article>
+              </div>
+            </div>
+          </section>
+
           <section class="projects-view hidden" id="projectsView" aria-label="Projects">
             <header class="projects-header">
               <h2>项目</h2>
@@ -370,6 +469,54 @@
               </span>
               <h3>没有匹配的项目</h3>
               <p>试试其他搜索词或标签页。</p>
+            </div>
+          </section>
+
+          <section class="project-detail-view hidden" id="projectDetailView" aria-label="Project detail">
+            <header class="project-detail-header">
+              <h2>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h7l2 2h9v10H3z" /></svg>
+                <span id="projectDetailTitle">cathy</span>
+              </h2>
+            </header>
+            <div class="project-chat-composer composer">
+              <textarea id="projectPromptInput" rows="1" placeholder="cathy中的新聊天"></textarea>
+              <div class="composer-footer">
+                <div class="composer-left-icons">
+                  <button class="plain-tool" type="button" id="projectAddToolButton" aria-label="添加">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+                  </button>
+                  <button class="plain-tool" type="button" id="projectSkillsToolButton" aria-label="Skills">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5c2.8 0 5 .5 8 2v10c-3-1.5-5.2-2-8-2v-10Z" /><path d="M20 6.5c-2.8 0-5 .5-8 2v10c3-1.5 5.2-2 8-2v-10Z" /></svg>
+                  </button>
+                </div>
+                <div class="composer-right-icons">
+                  <button class="plain-tool cube" type="button" id="projectModelToolButton" aria-label="模型">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z" /><path d="M12 12 4 7.5M12 12l8-4.5M12 12v9" /></svg>
+                  </button>
+                </div>
+                <button class="send-btn" type="button" aria-label="发送">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" /></svg>
+                </button>
+              </div>
+            </div>
+            <div class="project-chat-records" id="projectChatRecords">
+              <button class="project-chat-record" type="button" data-project-chat="cathyProjectCount">
+                <span>
+                  <strong>Cathy项目聊天数量</strong>
+                </span>
+                <time>6月2日</time>
+              </button>
+              <button class="project-chat-record" type="button" data-project-chat="imaSkillIntro">
+                <span>
+                  <strong>ima Copilot Skill 介绍</strong>
+                </span>
+                <time>5月28日</time>
+              </button>
+            </div>
+            <div class="project-chat-empty hidden" id="projectChatEmpty">
+              <h3>尚无聊天</h3>
+              <p><span id="projectEmptyName">olivia</span> 的聊天将显示在此处</p>
             </div>
           </section>
 
@@ -517,6 +664,17 @@
       </button>
     </div>
 
+    <div class="library-file-menu hidden" id="libraryFileMenu" role="menu" aria-hidden="true">
+      <button type="button" data-library-file-action="download">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14" /></svg>
+        下载
+      </button>
+      <button class="danger" type="button" data-library-file-action="delete">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 15h10l1-15" /></svg>
+        删除
+      </button>
+    </div>
+
     <div class="dialog-backdrop hidden" id="createProjectDialog" aria-hidden="true">
       <section class="project-dialog create-project" role="dialog" aria-modal="true" aria-labelledby="createProjectTitle">
         <button class="dialog-close" type="button" data-project-dialog-close aria-label="关闭">
@@ -530,6 +688,53 @@
           项目功能可将聊天、文件和自定义指令集中保存，以便用于持续进行的工作。
         </p>
         <button class="create-project-submit" type="button" id="confirmCreateProject">创建项目</button>
+      </section>
+    </div>
+
+    <div class="dialog-backdrop hidden" id="createLibraryDialog" aria-hidden="true">
+      <section class="library-dialog" role="dialog" aria-modal="true" aria-labelledby="createLibraryTitle">
+        <button class="dialog-close" type="button" id="closeLibraryCreate" aria-label="关闭">
+          <svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12" /></svg>
+        </button>
+        <h2 id="createLibraryTitle">创建知识库</h2>
+        <div class="library-form-stack">
+          <label for="newLibraryName">知识库名称</label>
+          <input id="newLibraryName" type="text" placeholder="请输入知识库名称" />
+          <label for="newLibraryDescription">描述</label>
+          <textarea id="newLibraryDescription" placeholder="请输入知识库描述"></textarea>
+          <label for="newLibraryPermission">成员权限</label>
+          <select id="newLibraryPermission">
+            <option>内容可查看和导出</option>
+            <option>内容可查看但不可导出</option>
+            <option>内容不可查看</option>
+          </select>
+        </div>
+        <div class="library-dialog-actions">
+          <button class="library-cancel" type="button" id="cancelLibraryCreate">取消</button>
+          <button class="library-confirm" type="button" id="confirmCreateLibrary">确定</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="dialog-backdrop hidden" id="uploadSkillDialog" aria-hidden="true">
+      <section class="upload-skill-dialog" role="dialog" aria-modal="true" aria-labelledby="uploadSkillTitle">
+        <button class="dialog-close" type="button" id="closeUploadSkill" aria-label="关闭">
+          <svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12" /></svg>
+        </button>
+        <h2 id="uploadSkillTitle">上传技能</h2>
+        <button class="skill-upload-dropzone" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 15v4h16v-4M12 15V5M8 9l4-4 4 4" /></svg>
+          <span>拖拽文件或点击上传</span>
+        </button>
+        <label class="skill-install-check">
+          <input type="checkbox" />
+          <span>非高风险自动安装</span>
+        </label>
+        <div class="skill-upload-rules">
+          <h3>文件要求</h3>
+          <p>• 文件夹或者 .zip 需要包含 SKILL.md 文件</p>
+          <p>• .md 文件需包含 YAML 格式的技能名称和描述</p>
+        </div>
       </section>
     </div>
 
@@ -643,10 +848,6 @@
       <button type="button" id="accountManageButton">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.5A3.5 3.5 0 1 0 12 8a3.5 3.5 0 0 0 0 7.5Z" /><path d="M19.4 15a1.8 1.8 0 0 0 .4 2l.1.1-2 3.4-.2-.1a1.8 1.8 0 0 0-2.1.3l-.4.2-.7 2h-4l-.7-2-.4-.2a1.8 1.8 0 0 0-2.1-.3l-.2.1-2-3.4.1-.1a1.8 1.8 0 0 0 .4-2l-.1-.5-1.6-1.4 2-3.4 1.9.4.4-.3a1.8 1.8 0 0 0 1-1.7V8l.7-2h4l.7 2v.2a1.8 1.8 0 0 0 1 1.7l.4.3 1.9-.4 2 3.4-1.6 1.4-.1.4Z" /></svg>
         账户管理
-      </button>
-      <button type="button" id="billingButton">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4zM4 9h16M8 14h4" /></svg>
-        账单
       </button>
       <button class="logout" type="button" id="logoutButton">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 17l5-5-5-5M15 12H3M21 3v18h-7" /></svg>
