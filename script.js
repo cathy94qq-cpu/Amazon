@@ -237,6 +237,18 @@ const openLibraryCreate = document.querySelector("#openLibraryCreate");
 const uploadSkillButton = document.querySelector("#uploadSkillButton");
 const uploadSkillDialog = document.querySelector("#uploadSkillDialog");
 const closeUploadSkill = document.querySelector("#closeUploadSkill");
+const expertDialog = document.querySelector("#expertDialog");
+const closeExpertDialog = document.querySelector("#closeExpertDialog");
+const expertDialogIcon = document.querySelector("#expertDialogIcon");
+const expertDialogTitle = document.querySelector("#expertDialogTitle");
+const expertDialogCategory = document.querySelector("#expertDialogCategory");
+const expertDialogIntro = document.querySelector("#expertDialogIntro");
+const expertDialogSources = document.querySelector("#expertDialogSources");
+const expertDialogStrengths = document.querySelector("#expertDialogStrengths");
+const expertDialogPrompts = document.querySelector("#expertDialogPrompts");
+const callExpertButton = document.querySelector("#callExpertButton");
+const activeExpertPill = document.querySelector("#activeExpertPill");
+const activeExpertName = document.querySelector("#activeExpertName");
 const createLibraryDialog = document.querySelector("#createLibraryDialog");
 const closeLibraryCreate = document.querySelector("#closeLibraryCreate");
 const cancelLibraryCreate = document.querySelector("#cancelLibraryCreate");
@@ -253,6 +265,11 @@ const libraryDetailView = document.querySelector("#libraryDetailView");
 const libraryDetailTitle = document.querySelector("#libraryDetailTitle");
 const libraryDetailDescription = document.querySelector("#libraryDetailDescription");
 const backToLibraryList = document.querySelector("#backToLibraryList");
+const libraryEmptyState = document.querySelector("#libraryEmptyState");
+const libraryDeleteDialog = document.querySelector("#libraryDeleteDialog");
+const libraryDeleteFileName = document.querySelector("#libraryDeleteFileName");
+const cancelLibraryDelete = document.querySelector("#cancelLibraryDelete");
+const confirmLibraryDelete = document.querySelector("#confirmLibraryDelete");
 const projectsView = document.querySelector("#projectsView");
 const projectDetailView = document.querySelector("#projectDetailView");
 const projectDetailTitle = document.querySelector("#projectDetailTitle");
@@ -329,6 +346,7 @@ const inviteButton = document.querySelector("#inviteButton");
 
 let activeProjectRow = null;
 let activeLibraryFileRow = null;
+let pendingLibraryDeleteRow = null;
 
 let activeMenuButton = null;
 let selectedChatId = "ads";
@@ -336,6 +354,99 @@ let isLoggedIn = false;
 let currentUser = {
   name: "memolabsio",
   email: "memolabsio@gmail.com",
+};
+
+const experts = {
+  store: {
+    title: "店铺运营顾问",
+    category: "店铺运营",
+    iconClass: "expert-icon-blue",
+    icon: "M4 20V9l8-5 8 5v11M8 20v-7h8v7",
+    intro: "精通亚马逊 A9 算法和店铺日常运营，从账号健康到 BSR 排名提升，提供全链路运营策略支持。",
+    sources: ["运营知识库", "合规手册"],
+    strengths: ["账号健康", "BSR 优化", "FBA 库存管理", "促销策略"],
+    prompts: [
+      "我的店铺 IPI 分数持续下降，怎么改善？",
+      "如何制定旺季备货计划以避免断货？",
+      "店铺被警告侵权，第一步应该怎么处理？",
+    ],
+    starter: "我们的店铺 IPI 分数持续下降，请从账号健康、库存周转和促销节奏帮我制定改善方案。",
+  },
+  product: {
+    title: "选品分析专家",
+    category: "选品开发",
+    iconClass: "expert-icon-green",
+    icon: "M5 20V9h4v11M10 20V4h4v16M15 20v-8h4v8",
+    intro: "基于市场数据和竞品分析，识别蓝海选品机会，评估竞争格局与利润空间，辅助决策选品方向。",
+    sources: ["选品报告库", "市场数据库"],
+    strengths: ["蓝海选品", "竞品分析", "利润测算", "市场机会"],
+    prompts: [
+      "这个类目是否还有蓝海切入机会？",
+      "如何判断竞品是否值得跟进？",
+      "新品定价时应该如何测算利润空间？",
+    ],
+    starter: "我想开发一个新的亚马逊产品，请从市场容量、竞品格局和利润空间帮我评估选品机会。",
+  },
+  ads: {
+    title: "广告投放专家",
+    category: "广告投放",
+    iconClass: "expert-icon-yellow",
+    icon: "M4 13h4l9-6v10l-9-4H4Zm4 0v5",
+    intro: "深度掌握 SP / SB / SD 广告逻辑，从关键词挖掘到竞价策略，帮助降低 ACOS 并提升广告 ROI。",
+    sources: ["广告策略库", "关键词数据库"],
+    strengths: ["SP 广告", "SB 广告", "ACOS 优化", "关键词拓展"],
+    prompts: [
+      "ACOS 突然升高，应该先检查哪些指标？",
+      "如何把广告预算分配给精准词和拓词广告？",
+      "新品广告前两周应该怎么设置投放节奏？",
+    ],
+    starter: "我的广告 ACOS 最近异常升高，请从关键词、竞价、预算和转化率角度帮我诊断。",
+  },
+  listing: {
+    title: "Listing 优化师",
+    category: "Listing 优化",
+    iconClass: "expert-icon-stone",
+    icon: "M5 19h14M7 17 17.5 6.5l-3-3L4 14v3h3Z",
+    intro: "精通亚马逊搜索算法与用户心理，优化标题、五点、A+ 内容和主图，提升自然流量和转化率。",
+    sources: ["Listing 模板库", "SEO 关键词库"],
+    strengths: ["标题优化", "A+ 内容", "主图策略", "五点描述"],
+    prompts: [
+      "如何重构标题与五点描述提升转化？",
+      "主图点击率偏低，应该怎么优化？",
+      "A+ 页面应该突出哪些卖点？",
+    ],
+    starter: "请帮我优化当前 Listing，从标题、五点、主图和 A+ 内容给出提升转化的改进建议。",
+  },
+  compliance: {
+    title: "合规法务顾问",
+    category: "合规法务",
+    iconClass: "expert-icon-red",
+    icon: "M12 3 5 6v6c0 4.5 3 7.5 7 9 4-1.5 7-4.5 7-9V6l-7-3Z",
+    intro: "熟悉亚马逊平台政策、各地区认证要求和知识产权规则，帮助规避合规风险，处理申诉和投诉。",
+    sources: ["合规手册", "专利检索库"],
+    strengths: ["侵权规避", "平台申诉", "产品认证", "风险排查"],
+    prompts: [
+      "收到侵权投诉后第一步应该怎么处理？",
+      "这个产品上架前需要准备哪些认证？",
+      "如何判断竞品图片是否存在侵权风险？",
+    ],
+    starter: "我遇到亚马逊合规风险，请帮我判断可能原因，并给出申诉或整改的第一步方案。",
+  },
+  data: {
+    title: "数据分析师",
+    category: "数据分析",
+    iconClass: "expert-icon-mint",
+    icon: "M4 18h16M6 15l4-4 3 3 5-7",
+    intro: "擅长解读亚马逊 Business Report、广告报告和库存数据，找出业务瓶颈并给出数据驱动的改进建议。",
+    sources: ["运营知识库", "广告策略库"],
+    strengths: ["Business Report", "转化率分析", "库存周转", "经营复盘"],
+    prompts: [
+      "如何从 Business Report 判断转化率问题？",
+      "库存周转变慢时应该优先看哪些数据？",
+      "如何做一份月度运营复盘？",
+    ],
+    starter: "请基于 Business Report、广告报告和库存数据，帮我做一次业务瓶颈分析。",
+  },
 };
 
 function openLoginModal() {
@@ -491,6 +602,11 @@ function showChatSurface() {
   examplesView.classList.add("hidden");
   composer.classList.remove("hidden");
   messages.classList.remove("hidden");
+  activeExpertPill.classList.add("hidden");
+  composer.classList.remove("expert-active");
+  promptInput.value = "";
+  promptInput.style.height = "auto";
+  promptInput.placeholder = "让 WinWise 分析一次亚马逊运营方案";
 }
 
 function showSkillsSurface() {
@@ -507,7 +623,7 @@ function showSkillsSurface() {
   projectsView.classList.add("hidden");
   projectDetailView.classList.add("hidden");
   examplesView.classList.add("hidden");
-  conversationTitle.textContent = "Skills";
+  conversationTitle.textContent = "Experts";
   conversationMode.lastChild.textContent = " 应用能力";
 }
 
@@ -529,8 +645,9 @@ function showLibrarySurface() {
   conversationTitle.textContent = "Library";
   conversationMode.lastChild.textContent = " 知识库";
   libraryHeader.classList.remove("hidden");
-  libraryListView.classList.remove("hidden");
-  libraryDetailView.classList.add("hidden");
+  libraryListView.classList.add("hidden");
+  libraryDetailView.classList.remove("hidden");
+  setLibraryTab("all");
 }
 
 function showProjectsSurface() {
@@ -595,6 +712,12 @@ function closeDialog(dialog) {
   dialog.setAttribute("aria-hidden", "true");
 }
 
+function clearExpertComposerState() {
+  activeExpertPill.classList.add("hidden");
+  composer.classList.remove("expert-active");
+  promptInput.placeholder = "让 WinWise 分析一次亚马逊运营方案";
+}
+
 function setNewChatMode(mode) {
   document.querySelectorAll(".mode-btn").forEach((item) => {
     const selected = item.dataset.mode === mode;
@@ -611,6 +734,11 @@ function renderConversation(chatId) {
   selectedChatId = chatId;
   showChatSurface();
   chatStage.classList.add("has-messages");
+  activeExpertPill.classList.add("hidden");
+  promptInput.placeholder = "让 WinWise 分析一次亚马逊运营方案";
+  clearExpertComposerState();
+  promptInput.value = "";
+  promptInput.style.height = "auto";
   conversationTitle.textContent = base.title;
   conversationMode.lastChild.textContent = ` ${base.mode}`;
   messages.innerHTML = `
@@ -625,6 +753,11 @@ function renderFeaturedExample(exampleId) {
   if (!example) return;
   showChatSurface();
   chatStage.classList.add("has-messages");
+  activeExpertPill.classList.add("hidden");
+  promptInput.placeholder = "让 WinWise 分析一次亚马逊运营方案";
+  clearExpertComposerState();
+  promptInput.value = "";
+  promptInput.style.height = "auto";
   document.querySelectorAll(".history-item").forEach((item) => item.classList.remove("active"));
   conversationTitle.textContent = example.title;
   messages.innerHTML = `
@@ -765,7 +898,9 @@ document.querySelector("#newChat").addEventListener("click", () => {
   messages.replaceChildren();
   chatStage.classList.remove("has-messages");
   setNewChatMode("quick");
+  activeExpertPill.classList.add("hidden");
   promptInput.value = "";
+  promptInput.placeholder = "让 WinWise 分析一次亚马逊运营方案";
   promptInput.style.height = "auto";
   promptInput.focus();
 });
@@ -788,25 +923,230 @@ searchDialog.addEventListener("click", (event) => {
   if (event.target === searchDialog) closeSearch.click();
 });
 
-openSkills.addEventListener("click", showSkillsSurface);
+function renderExpertChips(container, items) {
+  if (!container) return;
+  container.innerHTML = items.map((item) => `<span>${item}</span>`).join("");
+}
+
+function setExpertPrompt(text, expertId = null) {
+  closeDialog(expertDialog);
+  document.querySelector("#newChat").click();
+  if (expertId && experts[expertId]) {
+    activeExpertName.textContent = experts[expertId].title;
+    activeExpertPill.classList.remove("hidden");
+    promptInput.placeholder = `向${experts[expertId].title}提问`;
+  }
+  promptInput.value = text;
+  promptInput.style.height = "auto";
+  promptInput.style.height = `${promptInput.scrollHeight}px`;
+  promptInput.focus();
+}
+
+function summonExpert(expertId) {
+  const expert = experts[expertId];
+  if (!expert) return;
+  setExpertPrompt(expert.starter, expertId);
+}
+
+function openExpertDialog(expertId) {
+  const expert = experts[expertId];
+  if (!expert) return;
+  expertDialogIcon.className = `expert-icon ${expert.iconClass}`;
+  expertDialogIcon.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${expert.icon}" /></svg>`;
+  expertDialogTitle.textContent = expert.title;
+  expertDialogCategory.textContent = expert.category;
+  expertDialogIntro.textContent = expert.intro;
+  renderExpertChips(expertDialogSources, expert.sources);
+  renderExpertChips(expertDialogStrengths, expert.strengths);
+  expertDialogPrompts.innerHTML = expert.prompts
+    .map((prompt) => `<button type="button" data-expert-prompt="${prompt}">“${prompt}”<span>›</span></button>`)
+    .join("");
+  callExpertButton.textContent = `召唤${expert.title}`;
+  callExpertButton.dataset.expertTitle = expert.title;
+  openDialog(expertDialog);
+}
+
+openExpertDialog = function (expertId) {
+  const expert = experts[expertId];
+  if (!expert) return;
+  expertDialogIcon.className = `expert-icon ${expert.iconClass}`;
+  expertDialogIcon.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${expert.icon}" /></svg>`;
+  expertDialogTitle.textContent = expert.title;
+  expertDialogCategory.textContent = expert.category;
+  expertDialogIntro.textContent = expert.intro;
+  renderExpertChips(expertDialogSources, expert.sources);
+  renderExpertChips(expertDialogStrengths, expert.strengths);
+  expertDialogPrompts.innerHTML = expert.prompts
+    .map((prompt) => `<button type="button" data-expert-prompt="${prompt}">“${prompt}”<span>›</span></button>`)
+    .join("");
+  callExpertButton.textContent = `召唤${expert.title}`;
+  callExpertButton.dataset.expertTitle = expert.title;
+  callExpertButton.dataset.expertId = expertId;
+  openDialog(expertDialog);
+};
+
+openSkills.addEventListener("click", () => {
+  showSkillsSurface();
+  conversationMode.lastChild.textContent = " 专家中心";
+});
 openProjects.addEventListener("click", showProjectsSurface);
 openLibraryCreate.addEventListener("click", showLibrarySurface);
 
 function openUploadSkillDialog() {
+  if (!uploadSkillDialog) return;
   uploadSkillDialog.classList.remove("hidden");
   uploadSkillDialog.setAttribute("aria-hidden", "false");
 }
 
 function closeUploadSkillDialog() {
+  if (!uploadSkillDialog) return;
   uploadSkillDialog.classList.add("hidden");
   uploadSkillDialog.setAttribute("aria-hidden", "true");
 }
 
-uploadSkillButton.addEventListener("click", openUploadSkillDialog);
-closeUploadSkill.addEventListener("click", closeUploadSkillDialog);
-uploadSkillDialog.addEventListener("click", (event) => {
+document.querySelectorAll("[data-expert]").forEach((card) => {
+  card.addEventListener("click", () => openExpertDialog(card.dataset.expert));
+  card.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      openExpertDialog(card.dataset.expert);
+    }
+  });
+});
+
+document.querySelectorAll("[data-expert-call]").forEach((button) => {
+  button.addEventListener("click", (event) => {
+    event.stopPropagation();
+    summonExpert(button.dataset.expertCall);
+  });
+});
+
+document.querySelectorAll(".expert-filters button").forEach((button) => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".expert-filters button").forEach((filter) => filter.classList.toggle("active", filter === button));
+    const category = button.textContent.trim();
+    document.querySelectorAll("[data-expert]").forEach((card) => {
+      const expert = experts[card.dataset.expert];
+      card.classList.toggle("hidden", category !== "全部" && expert.category !== category);
+    });
+  });
+});
+
+document.querySelectorAll("[data-expert-filter]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const category = button.dataset.expertFilter;
+    document.querySelectorAll("[data-expert]").forEach((card) => {
+      const expert = experts[card.dataset.expert];
+      card.classList.toggle("hidden", category !== "all" && expert.category !== category);
+    });
+  });
+});
+
+closeExpertDialog.addEventListener("click", () => closeDialog(expertDialog));
+expertDialog.addEventListener("click", (event) => {
+  if (event.target === expertDialog) closeDialog(expertDialog);
+});
+expertDialogPrompts.addEventListener("click", (event) => {
+  const promptButton = event.target.closest("[data-expert-prompt]");
+  if (promptButton) setExpertPrompt(promptButton.dataset.expertPrompt);
+});
+callExpertButton.addEventListener("click", () => {
+  setExpertPrompt(`请以${callExpertButton.dataset.expertTitle}身份，基于资料库帮助我分析：`);
+});
+
+uploadSkillButton?.addEventListener("click", openUploadSkillDialog);
+closeUploadSkill?.addEventListener("click", closeUploadSkillDialog);
+uploadSkillDialog?.addEventListener("click", (event) => {
   if (event.target === uploadSkillDialog) closeUploadSkillDialog();
 });
+
+openExpertDialog = function (expertId) {
+  const expert = experts[expertId];
+  if (!expert) return;
+  expertDialogIcon.className = `expert-icon ${expert.iconClass}`;
+  expertDialogIcon.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${expert.icon}" /></svg>`;
+  expertDialogTitle.textContent = expert.title;
+  expertDialogCategory.textContent = expert.category;
+  expertDialogIntro.textContent = expert.intro;
+  renderExpertChips(expertDialogStrengths, expert.strengths);
+  expertDialogPrompts.innerHTML = expert.prompts
+    .map((prompt) => `<button type="button" data-expert-prompt="${prompt}">“${prompt}”<span>›</span></button>`)
+    .join("");
+  callExpertButton.textContent = `召唤${expert.title}`;
+  callExpertButton.dataset.expertTitle = expert.title;
+  callExpertButton.dataset.expertId = expertId;
+  openDialog(expertDialog);
+};
+
+document.querySelectorAll("[data-expert-popover-filter]").forEach((button) => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll("[data-expert-popover-filter]").forEach((tab) => {
+      tab.classList.toggle("active", tab === button);
+    });
+    const category = button.dataset.expertPopoverFilter;
+    document.querySelectorAll("[data-expert-popover-category]").forEach((item) => {
+      item.classList.toggle("hidden", category !== "all" && item.dataset.expertPopoverCategory !== category);
+    });
+  });
+});
+
+document.querySelectorAll("[data-expert-pick]").forEach((button) => {
+  button.addEventListener("click", () => {
+    closeComposerPopovers();
+    summonExpert(button.dataset.expertPick);
+  });
+});
+
+setExpertPrompt = function (text, expertId = null) {
+  closeDialog(expertDialog);
+  document.querySelector("#newChat").click();
+  if (expertId && experts[expertId]) {
+    activeExpertName.textContent = experts[expertId].title;
+    activeExpertPill.classList.remove("hidden");
+    promptInput.placeholder = `向${experts[expertId].title}提问`;
+  }
+  promptInput.value = text;
+  promptInput.style.height = "auto";
+  promptInput.style.height = `${promptInput.scrollHeight}px`;
+  promptInput.focus();
+};
+
+callExpertButton.addEventListener("click", () => {
+  summonExpert(callExpertButton.dataset.expertId);
+});
+
+openExpertDialog = function (expertId) {
+  const expert = experts[expertId];
+  if (!expert) return;
+  expertDialogIcon.className = `expert-icon ${expert.iconClass}`;
+  expertDialogIcon.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${expert.icon}" /></svg>`;
+  expertDialogTitle.textContent = expert.title;
+  expertDialogCategory.textContent = expert.category;
+  expertDialogIntro.textContent = expert.intro;
+  renderExpertChips(expertDialogStrengths, expert.strengths);
+  expertDialogPrompts.innerHTML = expert.prompts
+    .map((prompt) => `<button type="button" data-expert-prompt="${prompt}">&ldquo;${prompt}&rdquo;<span>&rsaquo;</span></button>`)
+    .join("");
+  callExpertButton.textContent = `\u53ec\u5524${expert.title}`;
+  callExpertButton.dataset.expertTitle = expert.title;
+  callExpertButton.dataset.expertId = expertId;
+  openDialog(expertDialog);
+};
+
+setExpertPrompt = function (text, expertId = null) {
+  closeDialog(expertDialog);
+  document.querySelector("#newChat").click();
+  if (expertId && experts[expertId]) {
+    activeExpertName.textContent = experts[expertId].title;
+    activeExpertPill.classList.remove("hidden");
+    composer.classList.add("expert-active");
+    promptInput.placeholder = `\u5411${experts[expertId].title}\u63d0\u95ee`;
+  }
+  promptInput.value = text;
+  promptInput.style.height = "auto";
+  promptInput.style.height = `${promptInput.scrollHeight}px`;
+  promptInput.focus();
+};
 
 function openLibraryDialog() {
   createLibraryDialog.classList.remove("hidden");
@@ -821,7 +1161,7 @@ function closeLibraryDialog() {
   createLibraryDialog.setAttribute("aria-hidden", "true");
 }
 
-newLibraryButton.addEventListener("click", openLibraryDialog);
+newLibraryButton.addEventListener("click", () => {});
 closeLibraryCreate.addEventListener("click", closeLibraryDialog);
 cancelLibraryCreate.addEventListener("click", closeLibraryDialog);
 createLibraryDialog.addEventListener("click", (event) => {
@@ -846,14 +1186,22 @@ confirmCreateLibrary.addEventListener("click", () => {
   closeLibraryDialog();
 });
 
-document.querySelectorAll("[data-library-tab]").forEach((button) => {
-  button.addEventListener("click", () => {
-    document.querySelectorAll("[data-library-tab]").forEach((tab) => tab.classList.toggle("active", tab === button));
-    const tabType = button.dataset.libraryTab;
-    document.querySelectorAll("[data-library-kind]").forEach((row) => {
-      row.classList.toggle("hidden", tabType !== "all" && row.dataset.libraryKind !== tabType);
-    });
+function setLibraryTab(tabType) {
+  document.querySelectorAll("[data-library-tab]").forEach((tab) => {
+    tab.classList.toggle("active", tab.dataset.libraryTab === tabType);
   });
+  const rows = Array.from(document.querySelectorAll("[data-library-kind]"));
+  rows.forEach((row) => {
+    row.classList.toggle("hidden", tabType !== "all" && row.dataset.libraryKind !== tabType);
+  });
+  const visibleRows = rows.filter((row) => !row.classList.contains("hidden"));
+  const table = document.querySelector("#libraryDetailView .library-table");
+  libraryEmptyState.classList.toggle("hidden", visibleRows.length > 0);
+  table.classList.toggle("hidden", visibleRows.length === 0);
+}
+
+document.querySelectorAll("[data-library-tab]").forEach((button) => {
+  button.addEventListener("click", () => setLibraryTab(button.dataset.libraryTab));
 });
 
 function openLibraryDetail(row) {
@@ -873,7 +1221,7 @@ function bindLibrarySummaryRow(row) {
 
 document.querySelectorAll(".library-summary-row").forEach(bindLibrarySummaryRow);
 
-backToLibraryList.addEventListener("click", () => {
+backToLibraryList?.addEventListener("click", () => {
   libraryDetailView.classList.add("hidden");
   libraryHeader.classList.remove("hidden");
   libraryListView.classList.remove("hidden");
@@ -887,7 +1235,7 @@ document.querySelector(".library-table").addEventListener("click", (event) => {
   activeLibraryFileRow = moreButton.closest(".library-row");
   activeLibraryFileRow.classList.add("menu-open");
   const rect = moreButton.getBoundingClientRect();
-  libraryFileMenu.style.left = `${rect.right - 150}px`;
+  libraryFileMenu.style.left = `${rect.right - 184}px`;
   libraryFileMenu.style.top = `${rect.bottom + 6}px`;
   libraryFileMenu.classList.remove("hidden");
   libraryFileMenu.setAttribute("aria-hidden", "false");
@@ -910,10 +1258,38 @@ libraryFileMenu.addEventListener("click", (event) => {
   }
 
   if (action === "delete") {
-    activeLibraryFileRow.remove();
+    pendingLibraryDeleteRow = activeLibraryFileRow;
+    libraryDeleteFileName.textContent = fileName;
+    libraryDeleteDialog.classList.remove("hidden");
+    libraryDeleteDialog.setAttribute("aria-hidden", "false");
   }
 
   closeLibraryFileMenu();
+});
+
+function closeLibraryDeleteDialog() {
+  libraryDeleteDialog.classList.add("hidden");
+  libraryDeleteDialog.setAttribute("aria-hidden", "true");
+}
+
+cancelLibraryDelete.addEventListener("click", () => {
+  pendingLibraryDeleteRow = null;
+  closeLibraryDeleteDialog();
+});
+
+confirmLibraryDelete.addEventListener("click", () => {
+  pendingLibraryDeleteRow?.remove();
+  pendingLibraryDeleteRow = null;
+  closeLibraryDeleteDialog();
+  const activeTab = document.querySelector("[data-library-tab].active")?.dataset.libraryTab || "all";
+  setLibraryTab(activeTab);
+});
+
+libraryDeleteDialog.addEventListener("click", (event) => {
+  if (event.target === libraryDeleteDialog) {
+    pendingLibraryDeleteRow = null;
+    closeLibraryDeleteDialog();
+  }
 });
 
 document.querySelectorAll("[data-project-tab]").forEach((button) => {
@@ -1093,6 +1469,7 @@ document.querySelectorAll(".pill").forEach((button) => {
 [
   [addToolButton, addPopover],
   [skillsToolButton, skillsPopover],
+  [activeExpertPill, skillsPopover],
   [modelToolButton, modelPopover],
   [projectAddToolButton, addPopover],
   [projectSkillsToolButton, skillsPopover],
@@ -1442,6 +1819,8 @@ document.addEventListener("keydown", (event) => {
     closeComposerPopovers();
     closeProjectMenu();
     closeLibraryFileMenu();
+    closeLibraryDeleteDialog();
+    closeDialog(expertDialog);
     closeUploadSkillDialog();
     closeLibraryDialog();
     permissionMenu.classList.add("hidden");

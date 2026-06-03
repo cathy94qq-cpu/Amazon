@@ -26,8 +26,8 @@
             <span>Search</span>
           </button>
           <button class="sidebar-tool" type="button" id="openSkills">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 7.5 12 12l8-4.5L12 3Zm-8 9 8 4.5 8-4.5M4 16.5 12 21l8-4.5" /></svg>
-            <span>Skills</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM4 21a8 8 0 0 1 16 0M17.4 3.6l.8 1.7 1.8.3-1.3 1.2.3 1.8-1.6-.9-1.6.9.3-1.8-1.3-1.2 1.8-.3.8-1.7Z" /></svg>
+            <span>Experts</span>
           </button>
           <button class="sidebar-tool" type="button" id="openLibraryCreate">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h12l2 2v14H5zM9 4v5h8" /></svg>
@@ -246,137 +246,117 @@
             </div>
           </section>
 
-          <section class="skills-view hidden" id="skillsView" aria-label="Skills">
+          <section class="skills-view hidden" id="skillsView" aria-label="Experts">
             <header class="skills-header">
               <div>
-                <h2>技能</h2>
-                <p>赋予 WinWise 更强大的能力</p>
-              </div>
-              <div class="skills-actions">
-                <label class="skills-search">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.3-4.3m2.3-5.2a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z" /></svg>
-                  <input type="text" placeholder="搜索技能" />
-                </label>
-                <button class="new-project-button" type="button" id="uploadSkillButton">上传技能</button>
+                <h2>专家中心</h2>
+                <p>按职能方向召唤 AI 专家，每位专家均基于亚马逊运营知识库构建</p>
               </div>
             </header>
 
-            <section class="installed-skills">
-              <div class="skills-section-title">
-                <span>已安装</span>
-                <b>1</b>
-              </div>
-              <article class="installed-card">
-                <span class="skill-logo blue">W</span>
-                <div>
-                  <h3>WinWise 文档</h3>
-                  <p>WinWise 在线文档平台，创建、编辑、管理多种类型文档</p>
-                </div>
-              </article>
-            </section>
+            <div class="expert-filters" aria-label="专家分类">
+              <button class="active" type="button" data-expert-filter="all">全部</button>
+              <button type="button" data-expert-filter="店铺运营">店铺运营</button>
+              <button type="button" data-expert-filter="选品开发">选品开发</button>
+              <button type="button" data-expert-filter="广告投放">广告投放</button>
+              <button type="button" data-expert-filter="Listing 优化">Listing 优化</button>
+              <button type="button" data-expert-filter="合规法务">合规法务</button>
+              <button type="button" data-expert-filter="数据分析">数据分析</button>
+            </div>
 
-            <section class="recommended-skills">
-              <h2>推荐</h2>
-              <div class="skills-grid">
-                <article class="skill-card">
-                  <span class="skill-logo rose">S</span>
+            <section class="experts-grid" aria-label="专家列表">
+              <article class="expert-card" role="button" tabindex="0" data-expert="store">
+                <div class="expert-card-head">
+                  <span class="expert-icon expert-icon-blue"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11M8 20v-7h8v7" /></svg></span>
                   <div>
-                    <h3>Self-Improving Agent</h3>
-                    <p>捕获经验教训、错误和纠正，以实现持续改进。适用于运营复盘与流程优化。</p>
-                    <small>675k · 3.9k</small>
+                    <h3>店铺运营顾问 <em>热门</em></h3>
+                    <div class="expert-tags"><span>账号健康</span><span>BSR 优化</span><span>FBA 库存管理</span></div>
                   </div>
-                </article>
-                <article class="skill-card">
-                  <span class="skill-logo cyan">S</span>
+                </div>
+                <p>精通亚马逊 A9 算法和店铺日常运营，从账号健康到 BSR 排名提升，提供全链路运营策略支持。</p>
+                <button class="expert-call" type="button" data-expert-call="store">召唤 →</button>
+              </article>
+              <article class="expert-card" role="button" tabindex="0" data-expert="product">
+                <div class="expert-card-head">
+                  <span class="expert-icon expert-icon-green"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V9h4v11M10 20V4h4v16M15 20v-8h4v8" /></svg></span>
                   <div>
-                    <h3>Summarize</h3>
-                    <p>总结 URL 或文件，支持网页、PDF、图片、音频与运营资料。</p>
-                    <small>491k · 906</small>
+                    <h3>选品分析专家 <em>热门</em></h3>
+                    <div class="expert-tags"><span>蓝海选品</span><span>竞品分析</span><span>利润测算</span></div>
                   </div>
-                </article>
-                <article class="skill-card">
-                  <span class="skill-logo violet">F</span>
+                </div>
+                <p>基于市场数据和竞品分析，识别蓝海选品机会，评估竞争格局与利润空间，辅助决策选品方向。</p>
+                <button class="expert-call" type="button" data-expert-call="product">召唤 →</button>
+              </article>
+              <article class="expert-card" role="button" tabindex="0" data-expert="ads">
+                <div class="expert-card-head">
+                  <span class="expert-icon expert-icon-yellow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13h4l9-6v10l-9-4H4Zm4 0v5" /></svg></span>
                   <div>
-                    <h3>Find Skills</h3>
-                    <p>当用户询问如何做某事时，帮助发现并安装智能体技能。</p>
-                    <small>458k · 1.3k</small>
+                    <h3>广告投放专家</h3>
+                    <div class="expert-tags"><span>SP 广告</span><span>SB 广告</span><span>ACOS 优化</span></div>
                   </div>
-                </article>
-                <article class="skill-card">
-                  <span class="skill-logo orange">G</span>
+                </div>
+                <p>深度掌握 SP / SB / SD 广告逻辑，从关键词挖掘到竞价策略，帮助降低 ACOS 并提升广告 ROI。</p>
+                <button class="expert-call" type="button" data-expert-call="ads">召唤 →</button>
+              </article>
+              <article class="expert-card" role="button" tabindex="0" data-expert="listing">
+                <div class="expert-card-head">
+                  <span class="expert-icon expert-icon-stone"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19h14M7 17 17.5 6.5l-3-3L4 14v3h3Z" /></svg></span>
                   <div>
-                    <h3>Github</h3>
-                    <p>使用 gh CLI 与 GitHub 交互，管理 issue、PR、CI 运行及代码协作。</p>
-                    <small>307k · 624</small>
+                    <h3>Listing 优化师</h3>
+                    <div class="expert-tags"><span>标题优化</span><span>A+ 内容</span><span>主图策略</span></div>
                   </div>
-                </article>
-                <article class="skill-card">
-                  <span class="skill-logo purple">S</span>
+                </div>
+                <p>精通亚马逊搜索算法与用户心理，优化标题、五点、A+ 内容和主图，提升自然流量和转化率。</p>
+                <button class="expert-call" type="button" data-expert-call="listing">召唤 →</button>
+              </article>
+              <article class="expert-card" role="button" tabindex="0" data-expert="compliance">
+                <div class="expert-card-head">
+                  <span class="expert-icon expert-icon-red"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v6c0 4.5 3 7.5 7 9 4-1.5 7-4.5 7-9V6l-7-3Z" /></svg></span>
                   <div>
-                    <h3>Self-Improving + Proactive Agent</h3>
-                    <p>自我反思、自我批评、自我学习与自组织记忆，提升长期任务表现。</p>
-                    <small>294k · 1.2k</small>
+                    <h3>合规法务顾问</h3>
+                    <div class="expert-tags"><span>侵权规避</span><span>平台申诉</span><span>产品认证</span></div>
                   </div>
-                </article>
-                <article class="skill-card">
-                  <span class="skill-logo indigo">A</span>
+                </div>
+                <p>熟悉亚马逊平台政策、各地区认证要求和知识产权规则，帮助规避合规风险，处理申诉和投诉。</p>
+                <button class="expert-call" type="button" data-expert-call="compliance">召唤 →</button>
+              </article>
+              <article class="expert-card" role="button" tabindex="0" data-expert="data">
+                <div class="expert-card-head">
+                  <span class="expert-icon expert-icon-mint"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18h16M6 15l4-4 3 3 5-7" /></svg></span>
                   <div>
-                    <h3>Agent Browser</h3>
-                    <p>快速无头浏览器自动化，支持页面导航、点击和信息提取。</p>
-                    <small>275k · 793</small>
+                    <h3>数据分析师</h3>
+                    <div class="expert-tags"><span>Business Report</span><span>转化率分析</span><span>库存周转</span></div>
                   </div>
-                </article>
-              </div>
+                </div>
+                <p>擅长解读亚马逊 Business Report、广告报告和库存数据，找出业务瓶颈并给出数据驱动的改进建议。</p>
+                <button class="expert-call" type="button" data-expert-call="data">召唤 →</button>
+              </article>
             </section>
           </section>
 
           <section class="library-view hidden" id="libraryView" aria-label="Library">
             <header class="library-header" id="libraryHeader">
-              <h2>知识库</h2>
+              <h2>资料库</h2>
               <div>
                 <label class="project-search">
                   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.3-4.3m2.3-5.2a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z" /></svg>
-                  <input type="text" placeholder="搜索知识库" />
+                  <input type="text" placeholder="搜索文件" />
                 </label>
                 <button class="new-project-button library-new-button" type="button" id="newLibraryButton">
-                  新建
+                  上传
                 </button>
               </div>
             </header>
-            <div class="library-list-view" id="libraryListView">
-              <div class="library-table library-summary-table">
-                <div class="library-table-head library-summary-head">
-                  <span>名称</span>
-                  <span>创建时间</span>
-                </div>
-                <article class="library-summary-row" data-library-name="DataDID" data-library-description="DataDID 运营资料、活动文档与站点内容沉淀">
-                  <button type="button">DataDID</button>
-                  <time>今天</time>
-                </article>
-                <article class="library-summary-row" data-library-name="MemolabsNotebook" data-library-description="团队知识笔记、项目复盘与素材归档">
-                  <button type="button">MemolabsNotebook</button>
-                  <time>5月29日</time>
-                </article>
-              </div>
-            </div>
-            <div class="library-detail-view hidden" id="libraryDetailView">
-              <header class="library-detail-header">
-                <button class="library-back" type="button" id="backToLibraryList" aria-label="返回知识库列表">
-                  <span id="libraryDetailTitle">DataDID</span>
-                </button>
-                <div>
-                  <label class="project-search">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.3-4.3m2.3-5.2a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z" /></svg>
-                    <input type="text" placeholder="搜索文件" />
-                  </label>
-                  <button class="new-project-button" type="button">上传文档</button>
-                </div>
-              </header>
-              <p class="library-detail-description" id="libraryDetailDescription">DataDID 运营资料、活动文档与站点内容沉淀</p>
+            <div class="library-list-view hidden" id="libraryListView"></div>
+            <div class="library-detail-view" id="libraryDetailView">
               <div class="library-tabs">
                 <button class="active" type="button" data-library-tab="all">全部</button>
                 <button type="button" data-library-tab="image">图片</button>
                 <button type="button" data-library-tab="file">文件</button>
+              </div>
+              <div class="library-empty-state hidden" id="libraryEmptyState">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.3-4.3m2.3-5.2a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z" /></svg>
+                <p>未找到文件</p>
               </div>
               <div class="library-table">
               <div class="library-table-head">
@@ -391,7 +371,7 @@
                 <em>31.5 KB</em>
                 <button class="library-file-more" type="button" aria-label="更多文件操作">...</button>
               </article>
-              <article class="library-row" data-library-kind="image">
+              <article class="library-row" data-library-kind="file">
                 <span><i class="file-icon image"></i>微信截图_20260529103618.png</span>
                 <time>5月29日</time>
                 <em>107 KB</em>
@@ -524,6 +504,10 @@
             <label class="sr-only" for="promptInput">给 WinWise 发送消息</label>
             <textarea id="promptInput" rows="1" placeholder="让 WinWise 分析一次亚马逊运营方案"></textarea>
             <div class="composer-footer">
+              <button class="active-expert-pill hidden" type="button" id="activeExpertPill">
+                <strong id="activeExpertName">店铺运营顾问</strong>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5" /></svg>
+              </button>
               <div class="composer-left-icons">
                 <button class="plain-tool" type="button" id="addToolButton" aria-label="添加">
                   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
@@ -557,44 +541,47 @@
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.4 11.6 12 21a6 6 0 0 1-8.5-8.5l9.7-9.7a4 4 0 0 1 5.7 5.7l-9.8 9.8a2 2 0 0 1-2.8-2.8l8.6-8.6" /></svg>
               Upload File
             </button>
-            <button type="button">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM3.6 9h16.8M3.6 15h16.8M12 3c2.2 2.4 3.3 5.4 3.3 9S14.2 18.6 12 21c-2.2-2.4-3.3-5.4-3.3-9S9.8 5.4 12 3Z" /></svg>
-              Web Search
-              <span class="mini-toggle" aria-hidden="true"></span>
-            </button>
-          </div>
+          <button type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM3.6 9h16.8M3.6 15h16.8M12 3c2.2 2.4 3.3 5.4 3.3 9S14.2 18.6 12 21c-2.2-2.4-3.3-5.4-3.3-9S9.8 5.4 12 3Z" /></svg>
+            Web Search
+            <span class="mini-toggle" aria-hidden="true"></span>
+          </button>
+        </div>
           <div class="composer-popover skills-popover hidden" id="skillsPopover" aria-hidden="true">
-            <h2>Skills</h2>
+            <h2>Experts</h2>
             <div class="skill-tabs">
-              <button class="active" type="button" data-skill-filter="agent">Agent</button>
-              <button type="button" data-skill-filter="productivity">Productivity</button>
-              <button type="button" data-skill-filter="developer">Developer</button>
-              <button type="button" data-skill-filter="browser">Browser</button>
+              <button class="active" type="button" data-expert-popover-filter="all">全部</button>
+              <button type="button" data-expert-popover-filter="店铺运营">店铺运营</button>
+              <button type="button" data-expert-popover-filter="选品开发">选品开发</button>
+              <button type="button" data-expert-popover-filter="广告投放">广告投放</button>
+              <button type="button" data-expert-popover-filter="Listing 优化">Listing 优化</button>
+              <button type="button" data-expert-popover-filter="合规法务">合规法务</button>
+              <button type="button" data-expert-popover-filter="数据分析">数据分析</button>
             </div>
             <div class="skill-popover-list">
-              <button type="button" data-skill-category="agent">
-                <span class="skill-mini-icon">S</span>
-                <span><strong>Self-Improving Agent</strong><small>捕获经验教训、错误和纠正，以实现持续改进。</small></span>
+              <button type="button" data-expert-popover-category="店铺运营" data-expert-pick="store">
+                <span class="skill-mini-icon">店</span>
+                <span><strong>店铺运营顾问</strong><small>账号健康、BSR 优化与 FBA 库存管理。</small></span>
               </button>
-              <button type="button" data-skill-category="productivity">
-                <span class="skill-mini-icon">S</span>
-                <span><strong>Summarize</strong><small>总结 URL 或文件，支持网页、PDF、图片与运营资料。</small></span>
+              <button type="button" data-expert-popover-category="选品开发" data-expert-pick="product">
+                <span class="skill-mini-icon">选</span>
+                <span><strong>选品分析专家</strong><small>蓝海选品、竞品分析与利润测算。</small></span>
               </button>
-              <button type="button" data-skill-category="agent">
-                <span class="skill-mini-icon">F</span>
-                <span><strong>Find Skills</strong><small>帮助发现并安装智能体技能。</small></span>
+              <button type="button" data-expert-popover-category="广告投放" data-expert-pick="ads">
+                <span class="skill-mini-icon">广</span>
+                <span><strong>广告投放专家</strong><small>SP / SB 广告、关键词策略与 ACOS 优化。</small></span>
               </button>
-              <button type="button" data-skill-category="developer">
-                <span class="skill-mini-icon">G</span>
-                <span><strong>Github</strong><small>使用 gh CLI 与 GitHub 交互，管理 issue、PR 和 CI。</small></span>
+              <button type="button" data-expert-popover-category="Listing 优化" data-expert-pick="listing">
+                <span class="skill-mini-icon">L</span>
+                <span><strong>Listing 优化师</strong><small>标题、五点、A+ 内容和主图策略。</small></span>
               </button>
-              <button type="button" data-skill-category="agent">
-                <span class="skill-mini-icon">S</span>
-                <span><strong>Self-Improving + Proactive Agent</strong><small>自我反思、自我批评、自我学习与自组织记忆。</small></span>
+              <button type="button" data-expert-popover-category="合规法务" data-expert-pick="compliance">
+                <span class="skill-mini-icon">合</span>
+                <span><strong>合规法务顾问</strong><small>侵权规避、平台申诉与产品认证。</small></span>
               </button>
-              <button type="button" data-skill-category="browser">
-                <span class="skill-mini-icon">A</span>
-                <span><strong>Agent Browser</strong><small>快速无头浏览器自动化，支持页面导航和信息提取。</small></span>
+              <button type="button" data-expert-popover-category="数据分析" data-expert-pick="data">
+                <span class="skill-mini-icon">数</span>
+                <span><strong>数据分析师</strong><small>Business Report、转化率与库存周转分析。</small></span>
               </button>
             </div>
           </div>
@@ -675,6 +662,17 @@
       </button>
     </div>
 
+    <div class="dialog-backdrop hidden" id="libraryDeleteDialog" aria-hidden="true">
+      <section class="library-delete-dialog" role="dialog" aria-modal="true" aria-labelledby="libraryDeleteTitle">
+        <h2 id="libraryDeleteTitle">删除文件？</h2>
+        <p>这将删除<strong id="libraryDeleteFileName">cathy.md</strong>。</p>
+        <div class="dialog-actions">
+          <button class="ghost-action" type="button" id="cancelLibraryDelete">取消</button>
+          <button class="danger-action" type="button" id="confirmLibraryDelete">删除</button>
+        </div>
+      </section>
+    </div>
+
     <div class="dialog-backdrop hidden" id="createProjectDialog" aria-hidden="true">
       <section class="project-dialog create-project" role="dialog" aria-modal="true" aria-labelledby="createProjectTitle">
         <button class="dialog-close" type="button" data-project-dialog-close aria-label="关闭">
@@ -713,6 +711,34 @@
           <button class="library-cancel" type="button" id="cancelLibraryCreate">取消</button>
           <button class="library-confirm" type="button" id="confirmCreateLibrary">确定</button>
         </div>
+      </section>
+    </div>
+
+    <div class="dialog-backdrop hidden" id="expertDialog" aria-hidden="true">
+      <section class="expert-dialog" role="dialog" aria-modal="true" aria-labelledby="expertDialogTitle">
+        <button class="expert-dialog-close" type="button" id="closeExpertDialog" aria-label="关闭">
+          <svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12" /></svg>
+        </button>
+        <header class="expert-dialog-head">
+          <span class="expert-icon expert-icon-blue" id="expertDialogIcon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11M8 20v-7h8v7" /></svg>
+          </span>
+          <div>
+            <h2 id="expertDialogTitle">店铺运营顾问</h2>
+            <span id="expertDialogCategory">店铺运营</span>
+          </div>
+        </header>
+        <div class="expert-dialog-body">
+          <h3>能力介绍</h3>
+          <p id="expertDialogIntro">精通亚马逊 A9 算法和店铺日常运营，从账号健康到 BSR 排名提升，提供全链路运营策略支持。</p>
+          <h3>擅长领域</h3>
+          <div class="expert-dialog-chips muted" id="expertDialogStrengths"></div>
+          <h3>试试这样问我</h3>
+          <div class="expert-prompt-list" id="expertDialogPrompts"></div>
+        </div>
+        <footer class="expert-dialog-footer">
+          <button type="button" id="callExpertButton">召唤店铺运营顾问</button>
+        </footer>
       </section>
     </div>
 
