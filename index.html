@@ -931,6 +931,15 @@
                   <h4>专业版</h4>
                   <p>进阶级效率专家</p>
                   <span class="subscription-status">生效中</span>
+                  <div class="subscription-meta">
+                    <span>到期时间</span>
+                    <strong>2026-06-28</strong>
+                  </div>
+                  <div class="usage-block">
+                    <div class="usage-head"><strong>个人本月用量</strong><em>62%</em></div>
+                    <i><b style="width: 62%"></b></i>
+                    <p><span class="blue-dot"></span>问答 623/1,000 <span class="green-dot"></span>Token 6万/10万</p>
+                  </div>
                   <div class="subscription-features">
                     <span>品牌记忆库</span>
                     <span>深度评论拆解</span>
@@ -939,7 +948,6 @@
                   </div>
                   <div class="subscription-actions">
                     <button type="button" id="openUpgradeFromAccount">更改套餐</button>
-                    <button class="outline-danger" type="button">取消订阅</button>
                   </div>
                 </article>
 
@@ -951,14 +959,19 @@
                   <h4>Business</h4>
                   <p>适用于 2 个或更多席位，按年计费</p>
                   <span class="subscription-status">生效中</span>
+                  <div class="subscription-meta">
+                    <span>到期时间</span>
+                    <strong>2027-05-28</strong>
+                  </div>
                   <div class="seat-cards">
                     <div><span>已购席位</span><strong>5</strong><small>$20 /席</small></div>
                     <div><span>已分配</span><strong>3</strong><small>含 1 待接受</small></div>
                     <div><span>剩余席位</span><strong>2</strong><small>可立即邀请</small></div>
                   </div>
-                  <div class="seat-usage">
-                    <span>席位占用</span><strong>3 / 5</strong>
-                    <i></i>
+                  <div class="usage-block business-usage-block">
+                    <div class="usage-head"><strong>团队本月总用量</strong><em>37%</em></div>
+                    <i><b style="width: 37%"></b></i>
+                    <p><span class="blue-dot"></span>问答 18,423/50,000 <span class="orange-dot"></span>Token 4,230万/1亿</p>
                   </div>
                   <div class="subscription-features">
                     <span>聊天和文件上传不限量</span>
@@ -968,8 +981,6 @@
                   </div>
                   <div class="subscription-actions">
                     <button type="button" id="manageSeatsButton">管理席位</button>
-                    <button type="button">更改套餐</button>
-                    <button class="outline-danger" type="button">取消订阅</button>
                   </div>
                   <div class="subscription-notice">你的个人专业版与 Business 空间相互独立。在 Business 标签页下操作时，个人聊天完整保留在「Personal」标签页，不受影响。</div>
                 </article>
@@ -986,42 +997,59 @@
                 </div>
               </div>
               <div class="seat-management">
+                <div class="seat-overview-cards">
+                  <div><span>席位使用</span><strong>3<small>/5 席位</small></strong><i><b style="width: 60%"></b></i></div>
+                  <div><span>团队本月问答</span><strong>18,423<small>/50,000</small></strong><i><b style="width: 37%"></b></i></div>
+                  <div><span>团队本月 Token</span><strong>4,230万<small>/1亿</small></strong><i class="orange"><b style="width: 42%"></b></i></div>
+                  <div><span>累计召唤专家</span><strong>286<small>次</small></strong><i class="expert"><b style="width: 72%"></b></i></div>
+                </div>
                 <h4>邀请新成员</h4>
                 <div class="invite-member-row">
                   <input type="email" aria-label="成员邮箱" />
                   <select aria-label="成员角色">
-                    <option>成员</option>
+                    <option>普通成员</option>
                     <option>管理员</option>
                   </select>
                   <button type="button">发送邀请</button>
                 </div>
                 <h4>团队成员 <span>3 人</span></h4>
-                <div class="member-list">
-                  <div class="member-row">
-                    <span class="member-avatar">WL</span>
-                    <div><strong>王磊</strong><small>wanglei@memo-labs.com</small></div>
-                    <em>管理员</em>
-                    <i class="active"></i>
-                    <span>已激活</span>
-                    <button type="button" disabled>操作</button>
+                <div class="member-list member-usage-table">
+                  <div class="member-table-head">
+                    <span>成员</span>
+                    <span>加入时间</span>
+                    <span>本月用量（问答 · Token）</span>
+                    <span>操作</span>
                   </div>
                   <div class="member-row">
-                    <span class="member-avatar green">ZY</span>
-                    <div><strong>张雨</strong><small>zhangyu@memo-labs.com</small></div>
-                    <em>成员</em>
-                    <i class="active"></i>
-                    <span>已激活</span>
-                    <button type="button">移除</button>
+                    <span class="member-avatar">张</span>
+                    <div><strong>张三（我）</strong><small>zhangsan@corp.com</small><em>管理员</em></div>
+                    <span class="join-date">2026/01/15</span>
+                    <div class="member-usage"><span>问答 6,420 / — · Token 1,230万 / —</span><i><b style="width: 46%"></b></i></div>
+                    <button type="button" disabled>—</button>
                   </div>
                   <div class="member-row">
-                    <span class="member-avatar amber">LX</span>
-                    <div><strong>李昕</strong><small>lixin@memo-labs.com</small></div>
-                    <em>成员</em>
-                    <i class="pending"></i>
-                    <span>待接受</span>
-                    <button type="button">重发邀请</button>
+                    <span class="member-avatar green">李</span>
+                    <div><strong>李四</strong><small>lisi@corp.com</small><em>成员</em></div>
+                    <span class="join-date">2026/02/10</span>
+                    <div class="member-usage"><span>问答 8,103 / — · Token 1,890万 / —</span><i><b style="width: 62%"></b></i></div>
+                    <div class="member-actions"><button type="button">设为管理员</button><button type="button">移除</button></div>
+                  </div>
+                  <div class="member-row">
+                    <span class="member-avatar mint">王</span>
+                    <div><strong>王五</strong><small>wangwu@corp.com</small><em>成员</em></div>
+                    <span class="join-date">2026/03/05</span>
+                    <div class="member-usage"><span>问答 3,900 / — · Token 1,110万 / —</span><i><b style="width: 34%"></b></i></div>
+                    <div class="member-actions"><button type="button">设为管理员</button><button type="button">移除</button></div>
+                  </div>
+                  <div class="member-row">
+                    <span class="member-avatar amber">赵</span>
+                    <div><strong>赵六（邀请中）</strong><small>zhaoliu@corp.com</small><em>成员</em></div>
+                    <span class="join-date">待加入</span>
+                    <div class="member-usage empty">—</div>
+                    <button type="button">撤销</button>
                   </div>
                 </div>
+                <div class="seat-warning">当前已使用 3 / 5 个席位，剩余 2 个可邀请。如需更多席位，请联系销售扩容。</div>
               </div>
             </section>
             <section class="account-tab-panel hidden" data-panel="billing">
@@ -1137,24 +1165,20 @@
               <li>有限的图片创建功能</li>
               <li>有限的记忆</li>
             </ul>
-            <footer>已有套餐？ <button type="button">查看账单帮助</button></footer>
           </article>
           <article class="business-card highlighted">
             <h3>Business</h3>
             <div class="business-price"><span>$</span>20 <small>USD /月</small></div>
             <p>借助适用于团队的 AI 完成更多工作</p>
-            <button class="business-upgrade" type="button" id="openBusinessCheckout">升级</button>
+            <button class="business-upgrade" type="button" id="openBusinessCheckout">升级至Business版</button>
             <ul>
-              <li>用于工作的高级模型</li>
-              <li>标准聊天和文件上传不限量</li>
-              <li>更多图像、视频生成和数据分析</li>
-              <li>集成与公司内部知识</li>
-              <li>Codex 编码代理</li>
-              <li>适用于团队的工具，如项目功能和自定义 GPT</li>
-              <li>支持 SSO、MFA 等功能的高级安全功能</li>
-              <li>内置隐私保护；数据绝不会用于训练我们的 AI 模型</li>
+              <li>所有模型</li>
+              <li>所有专家组</li>
+              <li>5个席位</li>
+              <li>跨平台知识图谱</li>
+              <li>超长上下文记忆</li>
+              <li>专属运营大脑</li>
             </ul>
-            <footer>适用于 2 个或更多席位，按月计费<br />无限制使用需遵守防滥用规范。<button type="button">了解更多</button></footer>
           </article>
         </div>
       </section>
@@ -1208,7 +1232,7 @@
                 <input type="text" />
               </label>
             </div>
-            <button class="personal-subscribe-button" type="button">订阅</button>
+            <button class="personal-subscribe-button" type="button" id="personalSubscribeButton">订阅</button>
             <p id="checkoutRenewal" class="personal-subscribe-note">
               将按每月自动续订，直至取消。将收取 US$20.00/月。可在设置中随时取消。订阅即表示你同意我们的使用条款和服务积分条款，已阅读隐私政策，并授权 WinWise 保存你的付款方式并进行扣费。
             </p>
@@ -1285,12 +1309,30 @@
               <div><span>预估税费</span><strong>US$0.00</strong></div>
               <div class="due"><span>今日应付金额</span><strong id="businessDueAmount">US$125.00</strong></div>
             </div>
-            <button type="button">订阅</button>
+            <button type="button" id="businessSubscribeButton">订阅</button>
           </aside>
         </div>
         <p class="business-checkout-note" id="businessCheckoutNote">
           按每月续订，直至取消。我们将按照活跃席位数收取 US$125.00。你可前往设置部分随时取消。订阅即表示，你同意 Business 条款，同时授权我们保存你的付款方式并向其收费。
         </p>
+      </section>
+    </div>
+
+    <div class="dialog-backdrop hidden" id="subscribeSuccessDialog" aria-hidden="true">
+      <section class="success-dialog" role="dialog" aria-modal="true" aria-labelledby="subscribeSuccessTitle">
+        <button class="dialog-close" type="button" id="closeSubscribeSuccess" aria-label="关闭">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" /></svg>
+        </button>
+        <span class="success-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6" /></svg>
+        </span>
+        <h2 id="subscribeSuccessTitle">订阅成功</h2>
+        <p id="subscribeSuccessMessage">你的套餐已成功开通，可以立即使用对应权益。</p>
+        <div class="success-summary">
+          <div><span>套餐</span><strong id="successPlanName">专业版</strong></div>
+          <div><span>生效时间</span><strong>立即生效</strong></div>
+        </div>
+        <button class="success-primary" type="button" id="finishSubscribeSuccess">开始使用</button>
       </section>
     </div>
 

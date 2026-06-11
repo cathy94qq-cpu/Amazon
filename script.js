@@ -301,6 +301,13 @@ const businessPlanLine = document.querySelector("#businessPlanLine");
 const businessPlanAmount = document.querySelector("#businessPlanAmount");
 const businessDueAmount = document.querySelector("#businessDueAmount");
 const businessCheckoutNote = document.querySelector("#businessCheckoutNote");
+const personalSubscribeButton = document.querySelector("#personalSubscribeButton");
+const businessSubscribeButton = document.querySelector("#businessSubscribeButton");
+const subscribeSuccessDialog = document.querySelector("#subscribeSuccessDialog");
+const closeSubscribeSuccess = document.querySelector("#closeSubscribeSuccess");
+const finishSubscribeSuccess = document.querySelector("#finishSubscribeSuccess");
+const successPlanName = document.querySelector("#successPlanName");
+const subscribeSuccessMessage = document.querySelector("#subscribeSuccessMessage");
 const checkoutTitle = document.querySelector("#checkoutTitle");
 const checkoutSubtitle = document.querySelector("#checkoutSubtitle");
 const checkoutIcon = document.querySelector("#checkoutIcon");
@@ -1668,6 +1675,7 @@ Object.assign(checkoutPlans, {
 function openCheckout(planKey) {
   const plan = checkoutPlans[planKey];
   closeUpgradeDialog();
+  activeCheckoutPlanName = planKey === "max" ? "Max版" : "专业版";
   checkoutTitle.textContent = plan.title;
   checkoutSubtitle.textContent = plan.subtitle;
   checkoutIcon.textContent = plan.icon;
@@ -1717,6 +1725,23 @@ function closeBusinessCheckoutDialog() {
   businessCheckoutDialog.setAttribute("aria-hidden", "true");
 }
 
+let activeCheckoutPlanName = "专业版";
+
+function showSubscribeSuccess(planName) {
+  successPlanName.textContent = planName;
+  subscribeSuccessMessage.textContent =
+    planName === "Business版"
+      ? "Business版已成功开通，团队席位和协作能力已立即生效。"
+      : `${planName}已成功开通，可以立即使用对应权益。`;
+  subscribeSuccessDialog.classList.remove("hidden");
+  subscribeSuccessDialog.setAttribute("aria-hidden", "false");
+}
+
+function closeSubscribeSuccessDialog() {
+  subscribeSuccessDialog.classList.add("hidden");
+  subscribeSuccessDialog.setAttribute("aria-hidden", "true");
+}
+
 function setBusinessBilling(type) {
   const isYearly = type === "yearly";
   businessBillingChoices.forEach((choice) => {
@@ -1742,6 +1767,25 @@ businessCheckoutDialog.addEventListener("click", (event) => {
 });
 businessBillingChoices.forEach((choice) => {
   choice.addEventListener("click", () => setBusinessBilling(choice.dataset.businessBilling));
+});
+
+personalSubscribeButton.addEventListener("click", () => {
+  closeCheckoutDialog();
+  showSubscribeSuccess(activeCheckoutPlanName);
+});
+
+businessSubscribeButton.addEventListener("click", () => {
+  closeBusinessCheckoutDialog();
+  showSubscribeSuccess("Business版");
+});
+
+closeSubscribeSuccess.addEventListener("click", closeSubscribeSuccessDialog);
+finishSubscribeSuccess.addEventListener("click", () => {
+  closeSubscribeSuccessDialog();
+  document.querySelector("#newChat").click();
+});
+subscribeSuccessDialog.addEventListener("click", (event) => {
+  if (event.target === subscribeSuccessDialog) closeSubscribeSuccessDialog();
 });
 
 closeLogin.addEventListener("click", closeLoginModal);
@@ -1816,6 +1860,7 @@ document.addEventListener("keydown", (event) => {
     closeUpgradeDialog();
     closeCheckoutDialog();
     closeBusinessCheckoutDialog();
+    closeSubscribeSuccessDialog();
     closeComposerPopovers();
     closeProjectMenu();
     closeLibraryFileMenu();
