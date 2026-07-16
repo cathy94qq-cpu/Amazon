@@ -1378,31 +1378,116 @@
 
     <div class="modal-backdrop hidden" id="loginModal" aria-hidden="true">
       <section class="login-card" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
-        <button class="close-btn" type="button" id="closeLogin" aria-label="关闭登录">
-          <svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12" /></svg>
-        </button>
-        <div class="login-brand">
-          <span class="login-logo">W</span>
-          <strong>WinWise</strong>
-        </div>
-        <h2 id="loginTitle">欢迎来到 WinWise</h2>
-        <p>登录或注册以继续</p>
-        <button class="oauth-btn" type="button" id="googleLogin">
-          <span class="google-dot">G</span>
-          使用 Google
-        </button>
-        <div class="login-divider"></div>
-        <form class="login-form" id="loginForm">
-          <label class="sr-only" for="emailInput">电子邮箱</label>
-          <input id="emailInput" type="email" placeholder="电子邮箱" autocomplete="email" required />
-          <div class="verify-box">
-            <span class="spinner" aria-hidden="true"></span>
-            <span>正在验证...</span>
-            <strong>CLOUDFLARE</strong>
+        <div class="auth-topbar">
+          <div class="auth-language-wrap">
+            <button class="auth-language" type="button" id="authLanguageToggle" aria-haspopup="menu" aria-expanded="false">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM3.6 9h16.8M3.6 15h16.8M12 3c2.2 2.4 3.3 5.4 3.3 9S14.2 18.6 12 21M12 3c-2.2 2.4-3.3 5.4-3.3 9s1.1 6.6 3.3 9" />
+              </svg>
+              <span data-auth-i18n="languageLabel">中文</span>
+              <svg class="chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+            </button>
+            <div class="auth-language-menu hidden" id="authLanguageMenu" role="menu" aria-hidden="true">
+              <button type="button" role="menuitemradio" aria-checked="true" data-auth-lang="zh">中文</button>
+              <button type="button" role="menuitemradio" aria-checked="false" data-auth-lang="en">English</button>
+            </div>
           </div>
-          <button class="email-submit" type="submit">使用邮箱继续</button>
-        </form>
-        <small>继续即表示您同意 使用条款 和 隐私政策</small>
+          <div class="login-brand">
+            <span class="login-logo">W</span>
+            <strong>WinWise</strong>
+          </div>
+          <button class="close-btn" type="button" id="closeLogin" aria-label="关闭登录">
+            <svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12" /></svg>
+          </button>
+        </div>
+
+        <div class="auth-screen" data-auth-screen="login">
+          <h2 id="loginTitle" data-auth-i18n="loginTitle">欢迎使用 WinWise</h2>
+          <p data-auth-i18n="loginSubtitle">使用邮箱登录，继续访问您的专家工作台。</p>
+          <form class="login-form" id="loginForm">
+            <label class="sr-only" for="emailInput">电子邮箱</label>
+            <input id="emailInput" type="email" placeholder="电子邮箱" autocomplete="email" required data-auth-placeholder="email" />
+            <div class="password-field">
+              <label class="sr-only" for="passwordInput">密码</label>
+              <input id="passwordInput" type="password" placeholder="密码（至少 6 位）" autocomplete="current-password" minlength="6" required data-auth-placeholder="password" />
+              <button class="password-toggle" type="button" data-password-toggle aria-label="显示或隐藏密码">
+                <svg viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" /><path d="M12 9.2a2.8 2.8 0 1 1 0 5.6 2.8 2.8 0 0 1 0-5.6Z" /></svg>
+              </button>
+            </div>
+            <button class="auth-link forgot-link" type="button" id="showReset" data-auth-i18n="forgotPassword">忘记密码？</button>
+            <button class="email-submit" type="submit" data-auth-i18n="loginButton">登录</button>
+          </form>
+          <div class="auth-inline">
+            <span data-auth-i18n="noAccount">还没有账号？</span>
+            <button class="auth-link" type="button" id="showRegister" data-auth-i18n="registerNow">立即注册</button>
+          </div>
+          <button class="auth-secondary" type="button" data-auth-home data-auth-i18n="backHome">返回首页</button>
+          <small data-auth-i18n="terms">继续即表示您同意 使用条款 和 隐私政策</small>
+        </div>
+
+        <div class="auth-screen hidden" data-auth-screen="register">
+          <h2 data-auth-i18n="registerTitle">创建您的 WinWise 账号</h2>
+          <p data-auth-i18n="registerSubtitle">创建账号，开始使用 WinWise 专家服务。</p>
+          <form class="login-form" id="registerForm">
+            <label class="sr-only" for="registerName">您的称呼</label>
+            <input id="registerName" type="text" placeholder="您的称呼" autocomplete="name" required data-auth-placeholder="name" />
+            <label class="sr-only" for="registerEmail">电子邮箱</label>
+            <input id="registerEmail" type="email" placeholder="电子邮箱" autocomplete="email" required data-auth-placeholder="email" />
+            <div class="password-field">
+              <label class="sr-only" for="registerPassword">密码</label>
+              <input id="registerPassword" type="password" placeholder="密码（至少 6 位）" autocomplete="new-password" minlength="6" required data-auth-placeholder="password" />
+              <button class="password-toggle" type="button" data-password-toggle aria-label="显示或隐藏密码">
+                <svg viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" /><path d="M12 9.2a2.8 2.8 0 1 1 0 5.6 2.8 2.8 0 0 1 0-5.6Z" /></svg>
+              </button>
+            </div>
+            <label class="sr-only" for="registerConfirm">确认密码</label>
+            <input id="registerConfirm" type="password" placeholder="确认密码" autocomplete="new-password" minlength="6" required data-auth-placeholder="confirmPassword" />
+            <button class="email-submit" type="submit" data-auth-i18n="registerButton">注册并进入</button>
+          </form>
+          <div class="auth-inline">
+            <span data-auth-i18n="hasAccount">已有账号？</span>
+            <button class="auth-link" type="button" id="showLoginFromRegister" data-auth-i18n="backLogin">返回登录</button>
+          </div>
+          <button class="auth-secondary" type="button" data-auth-home data-auth-i18n="backHome">返回首页</button>
+          <small data-auth-i18n="terms">继续即表示您同意 使用条款 和 隐私政策</small>
+        </div>
+
+        <div class="auth-screen hidden" data-auth-screen="reset">
+          <h2 data-auth-i18n="resetTitle">找回密码</h2>
+          <p data-auth-i18n="resetSubtitle">输入注册邮箱，我们将发送验证码用于重置密码。</p>
+          <form class="login-form" id="resetForm">
+            <label class="sr-only" for="resetEmail">电子邮箱</label>
+            <input id="resetEmail" type="email" placeholder="电子邮箱" autocomplete="email" required data-auth-placeholder="email" />
+            <div class="code-row">
+              <label class="sr-only" for="resetCode">邮箱验证码</label>
+              <input id="resetCode" type="text" inputmode="numeric" maxlength="6" placeholder="6 位邮箱验证码" required data-auth-placeholder="code" />
+              <button class="code-button" type="button" id="sendResetCode" data-auth-i18n="sendCode">发送验证码</button>
+            </div>
+            <div class="password-field">
+              <label class="sr-only" for="newPassword">新密码</label>
+              <input id="newPassword" type="password" placeholder="新密码（至少 6 位）" autocomplete="new-password" minlength="6" required data-auth-placeholder="newPassword" />
+              <button class="password-toggle" type="button" data-password-toggle aria-label="显示或隐藏密码">
+                <svg viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" /><path d="M12 9.2a2.8 2.8 0 1 1 0 5.6 2.8 2.8 0 0 1 0-5.6Z" /></svg>
+              </button>
+            </div>
+            <label class="sr-only" for="confirmNewPassword">确认新密码</label>
+            <input id="confirmNewPassword" type="password" placeholder="确认新密码" autocomplete="new-password" minlength="6" required data-auth-placeholder="confirmNewPassword" />
+            <button class="email-submit" type="submit" data-auth-i18n="resetButton">重置密码</button>
+          </form>
+          <div class="auth-inline">
+            <span data-auth-i18n="rememberPassword">想起密码了？</span>
+            <button class="auth-link" type="button" id="showLoginFromReset" data-auth-i18n="backLogin">返回登录</button>
+          </div>
+        </div>
+
+        <div class="auth-screen auth-success hidden" data-auth-screen="success">
+          <span class="success-check" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="m5 12 4 4 10-10" /></svg>
+          </span>
+          <h2 data-auth-i18n="successTitle">密码重置成功</h2>
+          <p data-auth-i18n="successSubtitle">请使用新密码登录您的 WinWise 账号。</p>
+          <button class="email-submit" type="button" id="successBackLogin" data-auth-i18n="successButton">返回登录</button>
+        </div>
       </section>
     </div>
 

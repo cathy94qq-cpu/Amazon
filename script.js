@@ -198,6 +198,75 @@ const sourcePill = `
   </div>
 `;
 
+const authCopy = {
+  zh: {
+    languageLabel: "中文",
+    loginTitle: "欢迎使用 WinWise",
+    loginSubtitle: "使用邮箱登录，继续访问您的专家工作台。",
+    loginButton: "登录",
+    forgotPassword: "忘记密码？",
+    noAccount: "还没有账号？",
+    registerNow: "立即注册",
+    backHome: "返回首页",
+    terms: "继续即表示您同意 使用条款 和 隐私政策",
+    registerTitle: "创建您的 WinWise 账号",
+    registerSubtitle: "创建账号，开始使用 WinWise 专家服务。",
+    registerButton: "注册并进入",
+    hasAccount: "已有账号？",
+    backLogin: "返回登录",
+    resetTitle: "找回密码",
+    resetSubtitle: "输入注册邮箱，我们将发送验证码用于重置密码。",
+    sendCode: "发送验证码",
+    codeSent: "已发送",
+    resetButton: "重置密码",
+    rememberPassword: "想起密码了？",
+    successTitle: "密码重置成功",
+    successSubtitle: "请使用新密码登录您的 WinWise 账号。",
+    successButton: "返回登录",
+    email: "电子邮箱",
+    password: "密码（至少 6 位）",
+    name: "您的称呼",
+    confirmPassword: "确认密码",
+    code: "6 位邮箱验证码",
+    newPassword: "新密码（至少 6 位）",
+    confirmNewPassword: "确认新密码",
+  },
+  en: {
+    languageLabel: "EN",
+    loginTitle: "Welcome to WinWise",
+    loginSubtitle: "Sign in with email to continue to your expert workspace.",
+    loginButton: "Log in",
+    forgotPassword: "Forgot password?",
+    noAccount: "No account yet?",
+    registerNow: "Create account",
+    backHome: "Back to home",
+    terms: "By continuing, you agree to the Terms and Privacy Policy",
+    registerTitle: "Create your WinWise account",
+    registerSubtitle: "Create an account to start using WinWise expert services.",
+    registerButton: "Create and continue",
+    hasAccount: "Already have an account?",
+    backLogin: "Back to login",
+    resetTitle: "Reset password",
+    resetSubtitle: "Enter your email and we will send a code to reset your password.",
+    sendCode: "Send code",
+    codeSent: "Sent",
+    resetButton: "Reset password",
+    rememberPassword: "Remembered it?",
+    successTitle: "Password reset",
+    successSubtitle: "Use your new password to sign in to WinWise.",
+    successButton: "Back to login",
+    email: "Email",
+    password: "Password (at least 6 characters)",
+    name: "Your name",
+    confirmPassword: "Confirm password",
+    code: "6-digit email code",
+    newPassword: "New password (at least 6 characters)",
+    confirmNewPassword: "Confirm new password",
+  },
+};
+
+let authLanguage = "zh";
+
 const sidebar = document.querySelector("#sidebar");
 const contextMenu = document.querySelector("#contextMenu");
 const loginModal = document.querySelector("#loginModal");
@@ -207,6 +276,11 @@ const profileName = document.querySelector("#profileName");
 const closeLogin = document.querySelector("#closeLogin");
 const loginForm = document.querySelector("#loginForm");
 const googleLogin = document.querySelector("#googleLogin");
+const registerForm = document.querySelector("#registerForm");
+const resetForm = document.querySelector("#resetForm");
+const authLanguageToggle = document.querySelector("#authLanguageToggle");
+const authLanguageMenu = document.querySelector("#authLanguageMenu");
+const sendResetCode = document.querySelector("#sendResetCode");
 const composer = document.querySelector("#composer");
 const promptInput = document.querySelector("#promptInput");
 const messages = document.querySelector("#messages");
@@ -457,6 +531,8 @@ const experts = {
 };
 
 function openLoginModal() {
+  setAuthScreen("login");
+  renderAuthLanguage();
   loginModal.classList.remove("hidden");
   loginModal.setAttribute("aria-hidden", "false");
   setTimeout(() => document.querySelector("#emailInput").focus(), 40);
@@ -465,6 +541,54 @@ function openLoginModal() {
 function closeLoginModal() {
   loginModal.classList.add("hidden");
   loginModal.setAttribute("aria-hidden", "true");
+  closeAuthLanguageMenu();
+}
+
+function setAuthScreen(screen) {
+  document.querySelectorAll("[data-auth-screen]").forEach((panel) => {
+    panel.classList.toggle("hidden", panel.dataset.authScreen !== screen);
+  });
+  const focusTarget = {
+    login: "#emailInput",
+    register: "#registerName",
+    reset: "#resetEmail",
+    success: "#successBackLogin",
+  }[screen];
+  setTimeout(() => document.querySelector(focusTarget)?.focus(), 40);
+}
+
+function renderAuthLanguage() {
+  const copy = authCopy[authLanguage];
+  document.querySelectorAll("[data-auth-i18n]").forEach((node) => {
+    const key = node.dataset.authI18n;
+    if (copy[key]) node.textContent = copy[key];
+  });
+  document.querySelectorAll("[data-auth-placeholder]").forEach((node) => {
+    const key = node.dataset.authPlaceholder;
+    if (copy[key]) node.placeholder = copy[key];
+  });
+  document.querySelectorAll("[data-auth-lang]").forEach((button) => {
+    button.setAttribute("aria-checked", String(button.dataset.authLang === authLanguage));
+  });
+}
+
+function closeAuthLanguageMenu() {
+  authLanguageMenu.classList.add("hidden");
+  authLanguageMenu.setAttribute("aria-hidden", "true");
+  authLanguageToggle.setAttribute("aria-expanded", "false");
+}
+
+function toggleAuthLanguageMenu() {
+  const willOpen = authLanguageMenu.classList.contains("hidden");
+  authLanguageMenu.classList.toggle("hidden", !willOpen);
+  authLanguageMenu.setAttribute("aria-hidden", String(!willOpen));
+  authLanguageToggle.setAttribute("aria-expanded", String(willOpen));
+}
+
+function setAuthLanguage(language) {
+  authLanguage = language;
+  renderAuthLanguage();
+  closeAuthLanguageMenu();
 }
 
 function setLoggedIn(label) {
@@ -1793,7 +1917,41 @@ loginModal.addEventListener("click", (event) => {
   if (event.target === loginModal) closeLoginModal();
 });
 
-googleLogin.addEventListener("click", () => setLoggedIn("Google 用户"));
+googleLogin?.addEventListener("click", () => setLoggedIn("Google 用户"));
+authLanguageToggle.addEventListener("click", (event) => {
+  event.stopPropagation();
+  toggleAuthLanguageMenu();
+});
+authLanguageMenu.addEventListener("click", (event) => {
+  event.stopPropagation();
+  const option = event.target.closest("[data-auth-lang]");
+  if (option) setAuthLanguage(option.dataset.authLang);
+});
+loginModal.querySelector(".login-card").addEventListener("click", (event) => {
+  if (!event.target.closest(".auth-language-wrap")) closeAuthLanguageMenu();
+});
+document.querySelector("#showRegister").addEventListener("click", () => setAuthScreen("register"));
+document.querySelector("#showReset").addEventListener("click", () => setAuthScreen("reset"));
+document.querySelector("#showLoginFromRegister").addEventListener("click", () => setAuthScreen("login"));
+document.querySelector("#showLoginFromReset").addEventListener("click", () => setAuthScreen("login"));
+document.querySelector("#successBackLogin").addEventListener("click", () => setAuthScreen("login"));
+document.querySelectorAll("[data-auth-home]").forEach((button) => {
+  button.addEventListener("click", closeLoginModal);
+});
+document.querySelectorAll("[data-password-toggle]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const input = button.closest(".password-field").querySelector("input");
+    input.type = input.type === "password" ? "text" : "password";
+  });
+});
+sendResetCode.addEventListener("click", () => {
+  sendResetCode.textContent = authCopy[authLanguage].codeSent;
+  sendResetCode.disabled = true;
+  setTimeout(() => {
+    sendResetCode.textContent = authCopy[authLanguage].sendCode;
+    sendResetCode.disabled = false;
+  }, 1200);
+});
 headerShare.addEventListener("click", () => openShare(document.querySelector(".history-item.active")));
 
 document.querySelectorAll("[data-dialog-close]").forEach((button) => {
@@ -1830,6 +1988,18 @@ loginForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const email = document.querySelector("#emailInput").value.trim();
   if (email) setLoggedIn(email);
+});
+
+registerForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const email = document.querySelector("#registerEmail").value.trim();
+  const name = document.querySelector("#registerName").value.trim();
+  setLoggedIn(email || name || "cathy");
+});
+
+resetForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  setAuthScreen("success");
 });
 
 composer.addEventListener("submit", (event) => {
